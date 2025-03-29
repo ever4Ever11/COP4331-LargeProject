@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import BackgroundImage from "../assets/7.png";
 import { motion } from "framer-motion";
 import * as FaIcons from 'react-icons/fa';
+import { buildPath } from '../components/Path.tsx';
+
 
 const Signup:React.FunctionComponent = ()=>
 {
@@ -41,8 +43,7 @@ const Signup:React.FunctionComponent = ()=>
                 var obj = {login: loginName, password: loginPassword, firstName: firstName, lastName: lastName};
                 var js = JSON.stringify(obj);
                 try {
-                        const response = await fetch(
-                                'http://64.227.20.253:5000/api/register',
+                        const response = await fetch(buildPath('api/register'),
                                 {
                                         method: 'POST',
                                         body: js,
