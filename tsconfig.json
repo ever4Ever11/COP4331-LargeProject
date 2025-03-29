@@ -9,6 +9,7 @@
     }
   ],
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "jsx": "react", // or "react-jsx" if you're using React 17+
     "lib": ["dom", "esnext"],
     "module": "esnext",
