@@ -1,6 +1,7 @@
 import React from 'react';
 import BackgroundImage from "../assets/6.png";
 import { motion } from "framer-motion";
+import { buildPath } from '../components/Path.tsx';
 
 const Login: React.FunctionComponent = () => 
 {
@@ -21,8 +22,7 @@ const Login: React.FunctionComponent = () =>
 		var js = JSON.stringify(obj);
 		try
 		{
-			const response = await fetch(
-				'http://way-finder.xyz:5000/api/login',
+			const response = await fetch(buildPath('api/login'),
 				{
 					method: 'POST',
 					body: js,
