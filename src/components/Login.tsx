@@ -38,21 +38,23 @@ const Login: React.FunctionComponent = () => {
 				}
 			);
 			var res = JSON.parse(await response.text());
+			console.log("Login response:", res);
 			const { accessToken } = res;
 			const decoded = jwtDecode<DecodedToken>(accessToken);
-			console.log("Decoded token:", decoded);
+			console.log("Decoded JWT:", decoded);
 
 
 			if (res.id <= 0) {
 				alert('User/Password combination incorrect');
 			}
 			else {
-				var user = {
+				const user = {
 					ud: decoded,
-					firstName: decoded.firstName ?? res.firstName ?? '',
-					lastName: decoded.lastName ?? res.lastName ?? '',
-					id: decoded.id ?? res.id
+					firstName: decoded?.firstName ?? res?.firstName ?? '',
+					lastName: decoded?.lastName ?? res?.lastName ?? '',
+					id: decoded?.id ?? res?.id
 				};
+				
 				
 				localStorage.setItem('user_data', JSON.stringify(user));
 				window.location.href = '/search';
