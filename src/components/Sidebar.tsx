@@ -5,9 +5,10 @@ import * as FaIcons from 'react-icons/fa'
 import { SidebarData } from './SidebarData'
 import styled from 'styled-components'
 import Logo from "../assets/logo.png";
-import userImg from "../assets/user.png";
-import { motion } from "framer-motion";
-import { slideUp, slideBottom  } from "../utility/animation";
+//import file from "../assets/user.png";
+import { motion } from "framer-motion"
+import ImageUpload from "./ImageUpload"
+import { slideUp, slideBottom  } from "../utility/animation"
 
 const Navbar = styled.div`
     display: flex;
@@ -97,8 +98,7 @@ const Sidebar: React.FunctionComponent = () => {
       event.preventDefault();
       localStorage.removeItem("user_data");
       window.location.href = '/';
-    };
-    
+    };    
     return (
         <> 
             {/* Logout button*/}
@@ -132,11 +132,7 @@ const Sidebar: React.FunctionComponent = () => {
             >
              <p>
             Welcome, {firstName} {lastName}
-            <img
-              src={userImg}
-              alt="User"
-              className="float-right shadow-2xl w-20 h-20 rounded-full border-4 border-black"
-            />
+            <ImageUpload />
             </p>
              </motion.div>
 
