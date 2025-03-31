@@ -64,7 +64,7 @@ const Home2 = () => {
             <p className="font-semibold text-xl">Bookmark</p>
             <p className="text-cyan-700 pl-6 border-l-2 border-cyan-700 italic">
             tourism<br/>
-            reataurants           
+            restaurants           
             </p>
           </motion.div>
         </div>

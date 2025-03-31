@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import BackgroundImage from "../assets/6.png";
 import { motion } from "framer-motion";
 import { buildPath } from '../components/Path.tsx';
@@ -11,6 +11,7 @@ interface DecodedToken {
 }
 
 const Login: React.FunctionComponent = () => {
+	const forgetPasswordDialogRef = useRef<any>(null);
 	const [loginName, setLoginName] = React.useState('');
 	const [loginPassword, setPassword] = React.useState('');
 
@@ -19,6 +20,11 @@ const Login: React.FunctionComponent = () => {
 	}
 	function handleSetPassword(e: any): void {
 		setPassword(e.target.value);
+	}
+
+	async function doPasswordReset(event: any): Promise<void> {
+		event.preventDefault();
+		forgetPasswordDialogRef.current.close();
 	}
 
 	async function doLogin(event: any): Promise<void> {
@@ -64,7 +70,8 @@ const Login: React.FunctionComponent = () => {
 
 	return (
 		<div className="loginDiv grid grid-cols-1 md:grid-cols-2 md:min-h-[500px]">
-			<div className="space-y-8 flex flex-col justify-center items-center text-center md:text-left py-20 px-10 md:pr-20 md:py-30 md:px-40 md:items-start">
+			<dialog className="resetDiv w-80 h-70 border-2 border-cyan-700 rounded-xl" ref={forgetPasswordDialogRef}>
+              <p className='mt-2 px-2'>Reset Password</p>
 				<form onSubmit={doLogin}>
 					<div className="mb-4">
 						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Email">
@@ -75,7 +82,7 @@ const Login: React.FunctionComponent = () => {
 							id="loginName"
 							placeholder="Email"
 							onChange={handleSetLoginName}
-							className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+							className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
 							required
 						/>
 					</div>
@@ -88,9 +95,48 @@ const Login: React.FunctionComponent = () => {
 							id="loginPassword"
 							placeholder="Password"
 							onChange={handleSetPassword}
-							className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+							className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
 							required
 						/>
+					</div>
+				</form>
+              <button onClick={doPasswordReset} className='border-none'>Submit</button>
+			  <button onClick={() => {forgetPasswordDialogRef.current.close()}} className='border-none'>Cancel</button>
+            </dialog>
+			<div className="space-y-8 flex flex-col justify-center items-center text-center md:text-left py-20 px-10 md:pr-20 md:py-30 md:px-40 md:items-start">
+				<form onSubmit={doLogin}>
+					<div className="mb-4">
+						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Email">
+							Email
+						</label>
+						<input
+							type="text"
+							id="loginName"
+							placeholder="Email"
+							onChange={handleSetLoginName}
+							className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+							required
+						/>
+					</div>
+					<div className="mb-4">
+						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Password">
+							Password
+						</label>
+						<input
+							type="password"
+							id="loginPassword"
+							placeholder="Password"
+							onChange={handleSetPassword}
+							className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+							required
+						/>
+					</div>
+					<div>
+						<button 
+						  className="text-sm float-right border-none hover:text-cyan-700 hover:underline hover:decoration-cyan-700"
+						  onClick={() => {forgetPasswordDialogRef.current.showModal()}}>
+						forget password?
+						</button>
 					</div>
 					<button
 						type="submit"

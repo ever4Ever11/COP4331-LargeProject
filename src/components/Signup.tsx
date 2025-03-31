@@ -88,9 +88,9 @@ const Signup: React.FunctionComponent = () => {
             <input
               type="text"
               id="firstName"
-              placeholder="FirstName"
+              placeholder="First Name"
               onChange={handleSetFirstName}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+              className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
               required
             />
           </div>
@@ -102,8 +102,8 @@ const Signup: React.FunctionComponent = () => {
               type="text"
               id="lastName"
               onChange={handleSetLastName}
-              placeholder="LastName"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+              placeholder="Last Name"
+              className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
               required
             />
           </div>
@@ -116,7 +116,7 @@ const Signup: React.FunctionComponent = () => {
               id="loginName"
               placeholder="Email"
               onChange={handleSetLoginName}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+              className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
               required
             />
           </div>
@@ -129,7 +129,7 @@ const Signup: React.FunctionComponent = () => {
               id="loginPassword"
               placeholder="Password"
               onChange={handleSetPassword}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+              className="w-50 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
               autoComplete="current-password"
               required
             />
@@ -149,9 +149,8 @@ const Signup: React.FunctionComponent = () => {
               required
             />
             <label className="px-3 py-2 text-gray-700 text-sm font-bold mb-2" htmlFor="Checkbox">
-              I agree to the terms and <br />
-              conditions as set out by the <br />
-              user agreement.
+              I agree to the terms and conditions <br />
+              as set out by the user agreement.<br />
             </label>
           </div>
           <button

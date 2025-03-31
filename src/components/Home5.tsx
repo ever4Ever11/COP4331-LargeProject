@@ -52,7 +52,7 @@ const Home5 = () => {
           className="text-center space-y-10 py-10"
         >
           <div className="space-y-4">
-            <p className="text-white text-3xl md:text-4xl font-bold">Travel with Us</p>
+            <p className="text-white text-3xl md:text-4xl font-bold">Travel with us</p>
           </div>
           <div className=" space-y-5">
              <div className="flex flex-row justify-center gap-3">
