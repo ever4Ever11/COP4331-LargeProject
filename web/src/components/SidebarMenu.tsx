@@ -17,9 +17,9 @@ export const SidebarMenu = [
             icon: <FaIcons.FaRegChartBar />
         },
         {
-            title: 'Logout',
-            path: '/logout',
-            icon: <FaIcons.FaSignOutAlt />
+            title: 'Team',
+            path: '/team',
+            icon: <FaIcons.FaTeamspeak />
         },
     
 ]

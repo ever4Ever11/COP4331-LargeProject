@@ -50,13 +50,13 @@ const ImageUpload: React.FC = () => {
   <img 
     src={avatarURL}
     alt="Avatar"
-    className="w-20 h-20 rounded-full border-2 border-black" /> 
+    className="w-20 h-20 rounded-full border-2 border-cyan-700" /> 
 
   <form id="form" encType="multipart/form-data">
     <button
       type="submit"
       onClick={handleImageUpload}
-      className="bg-white absolute right-14 top-20 rounded-full border-none">
+      className="bg-white absolute right-14 top-20 rounded-full border-none hover:text-cyan-700">
       <FaIcons.FaCloudUploadAlt/>
     </button>
     <input 

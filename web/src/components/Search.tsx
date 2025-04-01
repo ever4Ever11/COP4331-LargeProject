@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as FaIcons from 'react-icons/fa';
+import Bannerimage from "../assets/8.png";
 
 // Define a User type to type the data properly
 interface User {
@@ -88,7 +89,7 @@ const Search: React.FunctionComponent<PaginationProps> = ({ totalItems = 1000, i
   };
 
   return (
-    <div className="container py-10 max-w-5xl mx-auto">
+    <div className="container py-14 max-w-5xl mx-auto bg-cover" style={{ backgroundImage: `url(${Bannerimage})` }}>
       {/* Search Bar section */}
      <form className="max-w-lg mx-auto">
        <div className="flex">

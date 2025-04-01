@@ -1,6 +1,7 @@
 import React from 'react';
+import Bannerimage from "../assets/10.png";
 
-// Define the type for the data
+
 type Data = {
   id: number;
   firstName: string;
@@ -8,14 +9,14 @@ type Data = {
   email: string;
 };
 
-// Sample data
+
 const sampleData: Data[] = [
   { id: 1, firstName: 'test', lastName: 'test', email: 'test123@gmail.com' },
 ];
 
 const Info: React.FunctionComponent = () => {
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="container py-14 max-w-5xl mx-auto bg-cover" style={{ backgroundImage: `url(${Bannerimage})`}}>
       <div className="space-y-4">
         {sampleData.map((row) => (
           <div key={row.id} className="py-20 p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl">

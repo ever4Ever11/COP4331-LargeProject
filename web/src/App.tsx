@@ -6,7 +6,7 @@ import Signuppage from './pages/Signuppage.tsx';
 import Searchpage from './pages/Searchpage';
 import Infopage from './pages/Infopage';
 import Analyticspage from './pages/Analyticspage';
-import Logoutpage from './pages/Logoutpage';
+import Teampage from './pages/Teampage.tsx';
 
 
 const App = () =>
@@ -39,8 +39,8 @@ const App = () =>
 				       element={<Analyticspage />}
 					   >
 				</Route>
-				<Route path="/logout"
-				       element={<Logoutpage />}
+				<Route path="/team"
+				       element={<Teampage />}
 					   >
 				</Route>  
 			</Routes>

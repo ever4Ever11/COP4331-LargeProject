@@ -17,9 +17,9 @@ export const SidebarData = [
         icon: <FaIcons.FaHeart />
     },
     {
-        title: 'Logout',
-        path: '/logout',
-        icon: <FaIcons.FaSignOutAlt />
+        title: 'Team',
+        path: '/team',
+        icon: <FaIcons.FaTeamspeak />
     },
 
 ]

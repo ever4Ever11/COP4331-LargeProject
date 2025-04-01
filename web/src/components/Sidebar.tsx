@@ -5,10 +5,10 @@ import * as FaIcons from 'react-icons/fa'
 import { SidebarData } from './SidebarData'
 import styled from 'styled-components'
 import Logo from "../assets/logo.png";
-//import file from "../assets/user.png";
 import { motion } from "framer-motion"
 import ImageUpload from "./ImageUpload"
 import { slideUp, slideBottom  } from "../utility/animation"
+
 
 const Navbar = styled.div`
     display: flex;
@@ -130,11 +130,11 @@ const Sidebar: React.FunctionComponent = () => {
             animate="animate"
             className="bg-white rounded-lg font-bold text-2xl text-right"
             >
-             <p>
+             <p className='italic'>
             Welcome, {firstName} {lastName}
             <ImageUpload />
-            </p>
-             </motion.div>
+            </p>           
+            </motion.div>
 
             {/* sideMenu section */}
             <SidebarMenu close={close}>
