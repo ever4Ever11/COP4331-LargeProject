@@ -9,3 +9,14 @@ export function buildPath(route : string) {
         return 'http://localhost:5000/' + route;
     }
 }
+
+// for local machine use only
+// export function buildPath(route : string) {
+//     if (process.env.NODE_ENV === 'production') {
+//         //return 'https://' + app_name + '.xyz/' + route;
+//         return 'http://localhost:5000/' + route;
+//     }
+//     else {
+//         return 'http://localhost:5000/' + route;
+//     }
+// }
