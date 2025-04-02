@@ -19,10 +19,10 @@ const sampleData: Data[] = [
   
 const Team: React.FunctionComponent = () => {
     return (
-      <div className="container py-14 max-w-5xl mx-auto bg-cover" style={{ backgroundImage: `url(${Bannerimage})`}}>
-       <div className="grid grid-cols-3 gap-4"> 
+      <div className="container py-14 max-w-5xl mx-auto bg-cover border-4 rounded-lg border-cyan-700" style={{ backgroundImage: `url(${Bannerimage})`}}>
+       <div className="grid grid-cols-3 gap-4 border-2 rounded-lg border-cyan-700"> 
           {sampleData.map((row) => (
-            <div key={row.id} className="w-50 h-50 py-10 p-8 flex items-center justify-center hover:shadow-xl hover:border-4">
+            <div key={row.id} className="w-50 h-50 py-10 p-8 flex items-center justify-center hover:shadow-xl">
               <div className="p-8 text-xl text-gray-900">
                 <strong>{row.Name}</strong> 
               </div>

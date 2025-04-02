@@ -37,7 +37,7 @@ const Home2 = () => {
           >
             <img src={Img1} alt="image" className="rounded-full w-20 border-2 border-black" />
             <p className="font-semibold text-xl">Search</p>
-            <p className="text-cyan-700 pl-6 border-l-2 border-cyan-700 italic">
+            <p className="text-cyan-700 pl-6 border-l-4 border-cyan-700 italic">
             favorites<br/>
             destinations
             </p>
@@ -50,7 +50,7 @@ const Home2 = () => {
           >
             <img src={Img2} alt="image" className="rounded-full w-20 border-2 border-black" />
             <p className="font-semibold text-xl">Find</p>
-            <p className="text-cyan-700 pl-6 border-l-2 border-cyan-700 italic">
+            <p className="text-cyan-700 pl-6 border-l-4 border-cyan-700 italic">
             best travel deals          
             </p>
           </motion.div>
@@ -62,7 +62,7 @@ const Home2 = () => {
           >
             <img src={Img3} alt="image" className="rounded-full w-20 border-2 border-black" />
             <p className="font-semibold text-xl">Bookmark</p>
-            <p className="text-cyan-700 pl-6 border-l-2 border-cyan-700 italic">
+            <p className="text-cyan-700 pl-6 border-l-4 border-cyan-700 italic">
             tourism<br/>
             restaurants           
             </p>

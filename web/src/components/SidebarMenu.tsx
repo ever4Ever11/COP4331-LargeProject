@@ -12,8 +12,8 @@ export const SidebarMenu = [
             icon: <FaIcons.FaInfo />
         },
         {
-            title: 'Analytics',
-            path: '/analytics',
+            title: 'Bookmark',
+            path: '/bookmark',
             icon: <FaIcons.FaRegChartBar />
         },
         {

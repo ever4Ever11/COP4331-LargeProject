@@ -156,7 +156,7 @@ const Sidebar: React.FunctionComponent = () => {
     )
 }
 
-export default Sidebar
+export default Sidebar;
 
 
 

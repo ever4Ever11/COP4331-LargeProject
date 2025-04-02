@@ -5,7 +5,7 @@ import Loginpage from './pages/Loginpage.tsx';
 import Signuppage from './pages/Signuppage.tsx';
 import Searchpage from './pages/Searchpage';
 import Infopage from './pages/Infopage';
-import Analyticspage from './pages/Analyticspage';
+import Bookmarkpage from './pages/Bookmark.tsx';
 import Teampage from './pages/Teampage.tsx';
 
 
@@ -35,8 +35,8 @@ const App = () =>
 				       element={<Infopage  />}
 					   >
 				</Route>
-				<Route path="/analytics"
-				       element={<Analyticspage />}
+				<Route path="/bookmark"
+				       element={<Bookmarkpage />}
 					   >
 				</Route>
 				<Route path="/team"

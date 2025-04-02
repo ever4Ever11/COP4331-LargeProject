@@ -82,8 +82,8 @@ const Signup: React.FunctionComponent = () => {
       <div className="space-y-8 flex flex-col justify-center items-center text-center md:text-left py-20 px-10 md:pr-20 md:py-30 md:px-40 md:items-start">
         <form onSubmit={doSignup}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="FirstName">
-              First Name
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="FirstName">
+            <FaIcons.FaUser/> <p className="ml-3"> First Name </p>
             </label>
             <input
               type="text"
@@ -95,8 +95,8 @@ const Signup: React.FunctionComponent = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="LastName">
-              Last Name
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="LastName">
+            <FaIcons.FaUser/> <p className="ml-3"> Last Name </p>
             </label>
             <input
               type="text"
@@ -108,8 +108,8 @@ const Signup: React.FunctionComponent = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Email">
-              Email
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="Email">
+            <FaIcons.FaMailBulk/> <p className="ml-3"> Email </p>
             </label>
             <input
               type="text"
@@ -121,8 +121,8 @@ const Signup: React.FunctionComponent = () => {
             />
           </div>
           <div className="mb-4 relative">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Password">
-              Password
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="Password">
+            <FaIcons.FaLock/> <p className="ml-3"> Password </p>
             </label>
             <input
               type={inputType}
@@ -157,7 +157,7 @@ const Signup: React.FunctionComponent = () => {
             type="submit"
             className="w-full bg-cyan-700 text-white py-2 px-4 rounded-lg hover:bg-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:ring-opacity-50"
           >
-            Sign up with Email
+            Signup with Email
           </button>
         </form>
         <p className="text-sl mb-5 text-center text-gray-800">

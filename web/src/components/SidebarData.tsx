@@ -12,8 +12,8 @@ export const SidebarData = [
         icon: <FaIcons.FaInfo />
     },
     {
-        title: 'Analytics',
-        path: '/analytics',
+        title: 'Bookmark',
+        path: '/bookmark',
         icon: <FaIcons.FaHeart />
     },
     {
