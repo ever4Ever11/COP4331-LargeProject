@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path');
+const path = require('path'); // <-- add this
 
 const PORT = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
@@ -30,12 +30,21 @@ app.use((req, res, next) =>
   next();
 });
 
-app.use(express.static(path.join(__dirname, '../web/dist')));
+app.use(express.static('/var/www/html'));
 
-app.get('*', (req, res) =>
-{
-  res.sendFile(path.join(__dirname, '../web/dist', 'index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join('/var/www/html', 'index.html'));
 });
+
+
+//-------------------------------------------
+// for local machine use only
+// app.use(express.static(path.join(__dirname, '../web/dist')));
+
+// app.get('*', (req, res) =>
+// {
+//   res.sendFile(path.join(__dirname, '../web/dist', 'index.html'));
+// });
 
 app.listen(PORT, () =>
 {
