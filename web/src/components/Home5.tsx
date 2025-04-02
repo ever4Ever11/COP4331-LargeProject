@@ -56,7 +56,7 @@ const Home5 = () => {
           </div>
           <div className=" space-y-5">
              <div className="flex flex-row justify-center gap-3">
-              <p className="text-white font-semi text-lg">Downdload our Mobile App</p>
+              <p className="text-white font-semi text-lg">Download our Mobile App</p>
               <FaMobile className="text-white"/>
               </div>
           </div>
