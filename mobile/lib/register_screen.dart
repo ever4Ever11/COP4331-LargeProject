@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'path.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'login_screen.dart';
+import 'login_screen.dart'; // ✅ Import LoginScreen
 import 'search_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -27,57 +27,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 50.0,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Form(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              
               children: [
                 SizedBox(
                   width: 200.0,
-                  child: Image(image: AssetImage('assets/images/logo.png')),
+                  child: const Image(image: AssetImage('assets/images/logo.png')),
                 ),
-                SizedBox(height: 15.0),
-                Text(
-                  'Way Finder',
-                  style: theme.textTheme.headlineLarge,
-                ),
-                SizedBox(height: 25.0),
+                const SizedBox(height: 15.0),
+                Text('Way Finder', style: theme.textTheme.headlineLarge),
+                const SizedBox(height: 25.0),
                 TextFormField(
                   controller: firstNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'First Name',
                   ),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 TextFormField(
                   controller: lastNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Last Name',
                   ),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 TextFormField(
                   controller: emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Email',
                   ),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 TextFormField(
                   controller: passwordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Password',
                   ),
                   obscureText: true,
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 ElevatedButton(
                   onPressed: _registerEnabled ? () {
                     setState(() => _registerEnabled = false);
@@ -95,9 +89,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 }
                               );
                             } else {
+                              // Navigate to LoginScreen instead of SearchScreen after successful registration
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => SearchScreen(_user!),
+                                  builder: (BuildContext context) => LoginScreen(), // ✅ Navigate to LoginScreen
                                 ),
                                 (Route route) => false,
                               );
@@ -105,9 +100,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         });
                   } : null,
-                  child: Text('Register'),
+                  child: const Text('Register'),
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
@@ -116,13 +111,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     );
                   },
-                  child: Text("Already have an account?"),
+                  child: const Text("Already have an account?"),
                 )
               ],
-            )
-          )
-        )
-      )
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -148,10 +143,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Map<String, dynamic> body = jsonDecode(response.body);
 
     if (body['error'] != '') {
-      setState(() => _registerResult = 'Registration failed: ${body['error']}.');
+      setState(() => _registerResult = 'Registration failed: ${body['error']}.' );
       return;
     }
-
 
     response = await http.post(
       await path('api/login'),
@@ -172,12 +166,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     body = jsonDecode(response.body);
 
     if (body['error'] != null) {
-      setState(() => _registerResult = 'Login failed: ${body['error']}.');
+      setState(() => _registerResult = 'Login failed: ${body['error']}.' );
       return;
     }
 
     if (body['accessToken'] == null) {
-      setState(() => _registerResult = 'Login failed: No access token recieved from server.');
+      setState(() => _registerResult = 'Login failed: No access token received from server.' );
       return;
     }
 
@@ -185,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
-  dispose() {
+  void dispose() {
     firstNameController.dispose();
     lastNameController.dispose();
     emailController.dispose();
