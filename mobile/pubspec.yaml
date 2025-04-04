@@ -99,4 +99,8 @@ flutter:
 
   assets:
     - ./.env
-    - assets/images/
+    - assets/images/logo.png
+    - assets/images/place1.jpg
+    - assets/images/place2.jpg
+    - assets/images/place3.jpg
+    - assets/images/place4.jpg
