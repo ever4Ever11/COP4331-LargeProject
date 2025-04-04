@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'path.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+
+import 'path.dart';
 import 'register_screen.dart';
-import 'search_screen.dart';
+import 'home_screen.dart'; // I Updated this to HomeScreen I changed the names so that now the user gets sent to Home_screen and can go to a search_screen from there
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -25,41 +26,35 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 50.0,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Form(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              
               children: [
                 SizedBox(
                   width: 200.0,
-                  child: Image(image: AssetImage('assets/images/logo.png')),
+                  child: const Image(image: AssetImage('assets/images/logo.png')),
                 ),
-                SizedBox(height: 15.0),
-                Text(
-                  'Way Finder',
-                  style: theme.textTheme.headlineLarge,
-                ),
-                SizedBox(height: 50.0),
+                const SizedBox(height: 15.0),
+                Text('Way Finder', style: theme.textTheme.headlineLarge),
+                const SizedBox(height: 50.0),
                 TextFormField(
                   controller: emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Email',
                   ),
                 ),
-                SizedBox(height: 25.0),
+                const SizedBox(height: 25.0),
                 TextFormField(
                   controller: passwordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Password',
                   ),
                   obscureText: true,
                 ),
-                SizedBox(height: 25.0),
+                const SizedBox(height: 25.0),
                 ElevatedButton(
                   onPressed: _loginEnabled ? () {
                     setState(() => _loginEnabled = false);
@@ -79,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => SearchScreen(_user!),
+                                  builder: (BuildContext context) => HomeScreen(user: _user!), // ✅ Fixed
                                 ),
                                 (Route route) => false,
                               );
@@ -87,25 +82,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         });
                   } : null,
-                  child: Text('Log In'),
+                  child: const Text('Log In'),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 TextButton(
                   onPressed: () {
-                    print('Test');
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) => RegisterScreen(),
                       ),
                     );
                   },
-                  child: Text("Don't have an account?"),
+                  child: const Text("Don't have an account?"),
                 )
               ],
-            )
-          )
-        )
-      )
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -134,15 +128,17 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (body['accessToken'] == null) {
-      setState(() => _loginResult = 'Login failed: No access token recieved from server.');
+      setState(() => _loginResult = 'Login failed: No access token received from server.');
       return;
     }
 
-    setState(() => _user = JWT.decode(body['accessToken']!).payload as Map<String, dynamic>);
+    setState(() {
+      _user = JWT.decode(body['accessToken']!).payload as Map<String, dynamic>;
+    });
   }
 
   @override
-  dispose() {
+  void dispose() {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
