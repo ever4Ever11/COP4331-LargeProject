@@ -82,7 +82,7 @@ const Signup: React.FunctionComponent = () => {
       <div className="space-y-8 flex flex-col justify-center items-center text-center md:text-left py-20 px-10 md:pr-20 md:py-30 md:px-40 md:items-start">
         <form onSubmit={doSignup}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="FirstName">
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="firstName">
             <FaIcons.FaUser/> <p className="ml-3"> First Name </p>
             </label>
             <input
@@ -95,7 +95,7 @@ const Signup: React.FunctionComponent = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="LastName">
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="lastName">
             <FaIcons.FaUser/> <p className="ml-3"> Last Name </p>
             </label>
             <input
@@ -108,7 +108,7 @@ const Signup: React.FunctionComponent = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="Email">
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="loginName">
             <FaIcons.FaMailBulk/> <p className="ml-3"> Email </p>
             </label>
             <input
@@ -121,7 +121,7 @@ const Signup: React.FunctionComponent = () => {
             />
           </div>
           <div className="mb-4 relative">
-            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="Password">
+            <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="loginPassword">
             <FaIcons.FaLock/> <p className="ml-3"> Password </p>
             </label>
             <input
