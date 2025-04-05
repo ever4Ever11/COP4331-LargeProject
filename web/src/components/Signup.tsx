@@ -12,19 +12,19 @@ const Signup: React.FunctionComponent = () => {
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
   const [icon, setIcon] = useState(<FaIcons.FaEyeSlash />);
 
-  function handleSetFirstName(e: any): void {
+  function handleSetFirstName(e: React.ChangeEvent<HTMLInputElement>): void {
     setFirstName(e.target.value);
   }
 
-  function handleSetLastName(e: any): void {
+  function handleSetLastName(e: React.ChangeEvent<HTMLInputElement>): void {
     setLastName(e.target.value);
   }
 
-  function handleSetLoginName(e: any): void {
+  function handleSetLoginName(e: React.ChangeEvent<HTMLInputElement>): void {
     setLoginName(e.target.value);
   }
 
-  function handleSetPassword(e: any): void {
+  function handleSetPassword(e: React.ChangeEvent<HTMLInputElement>): void {
     setPassword(e.target.value);
   }
 
@@ -38,10 +38,10 @@ const Signup: React.FunctionComponent = () => {
     }
   };
 
-  async function doSignup(event: any): Promise<void> {
+  async function doSignup(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
-    var obj = { login: loginName, password: loginPassword, firstName: firstName, lastName: lastName };
-    var js = JSON.stringify(obj);
+    const obj = { login: loginName, password: loginPassword, firstName: firstName, lastName: lastName };
+    const js = JSON.stringify(obj);
     try {
       const response = await fetch(buildPath('api/register'), {
         method: 'POST',
@@ -58,8 +58,8 @@ const Signup: React.FunctionComponent = () => {
         alert(`${res.message}`);
       }
     }
-    catch (error: any) {
-      alert(error.toString());
+    catch (error: unknown) {
+      alert(error?.toString());
       return;
     }
   }
