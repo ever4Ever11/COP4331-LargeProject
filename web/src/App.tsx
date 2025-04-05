@@ -35,7 +35,7 @@ const App = () => {
 					element={<Infopage />}
 				>
 				</Route>
-				<Route path="/Bookmark"
+				<Route path="/bookmark"
 					element={<Bookmark />}
 				>
 				</Route>
