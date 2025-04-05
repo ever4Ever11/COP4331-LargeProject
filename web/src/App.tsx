@@ -5,7 +5,7 @@ import Loginpage from './pages/Loginpage.tsx';
 import Signuppage from './pages/Signuppage.tsx';
 import Searchpage from './pages/Searchpage';
 import Infopage from './pages/Infopage';
-import Bookmark from './pages/Bookmark.tsx';
+import Bookmarkpage from './pages/Bookmarkpage.tsx';
 import Teampage from './pages/Teampage.tsx';
 import ResetPassword from './pages/ResetPassword.tsx';
 
@@ -36,7 +36,7 @@ const App = () => {
 				>
 				</Route>
 				<Route path="/bookmark"
-					element={<Bookmark />}
+					element={<Bookmarkpage />}
 				>
 				</Route>
 				<Route path="/team"
