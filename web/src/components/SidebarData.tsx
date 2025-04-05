@@ -2,19 +2,19 @@ import * as FaIcons from 'react-icons/fa'
 
 export const SidebarData = [
     {
+        title: 'Profile',
+        path: '/info',
+        icon: <FaIcons.FaUser />
+    },
+    {
         title: 'Search',
         path: '/search',
         icon: <FaIcons.FaSearch />
     },
     {
-        title: 'Info',
-        path: '/info',
-        icon: <FaIcons.FaInfo />
-    },
-    {
         title: 'Bookmark',
         path: '/bookmark',
-        icon: <FaIcons.FaHeart />
+        icon: <FaIcons.FaBookmark />
     },
     {
         title: 'Team',
