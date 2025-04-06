@@ -1,0 +1,194 @@
+swagger: "2.0"
+info:
+  description: API documentation for the Vacation App.
+  version: 1.0.0
+  title: Way Finder
+  contact:
+    email: yo881251@ucf.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+host: way-finder.xyz:5000
+basePath: /
+schemes:
+  - http
+
+paths:
+  /api/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/Register'
+      responses:
+        200:
+          description: Registration response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              error:
+                type: string
+
+  /api/login:
+    post:
+      tags:
+        - Auth
+      summary: Login with credentials
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: Login response
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              firstName:
+                type: string
+              lastName:
+                type: string
+              accessToken:
+                type: string
+              error:
+                type: string
+
+  /api/verify-email:
+    get:
+      tags:
+        - Auth
+      summary: Verify email with token
+      produces:
+        - text/html
+      parameters:
+        - in: query
+          name: token
+          required: true
+          type: string
+      responses:
+        200:
+          description: HTML confirmation page
+        400:
+          description: Invalid or expired token
+
+  /api/request-password-reset:
+    post:
+      tags:
+        - Auth
+      summary: Request password reset
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/EmailOnly'
+      responses:
+        200:
+          description: Email sent
+        400:
+          description: Email not found
+
+  /api/reset-password:
+    post:
+      tags:
+        - Auth
+      summary: Reset password with token
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: reset
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPassword'
+      responses:
+        200:
+          description: Password successfully reset
+        400:
+          description: Invalid or expired token
+
+definitions:
+  Register:
+    type: object
+    required:
+      - firstName
+      - lastName
+      - login
+      - password
+    properties:
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Doe
+      login:
+        type: string
+        format: email
+        example: yoanmolina15@gmail.com
+      password:
+        type: string
+        example: securePassword123
+
+  Login:
+    type: object
+    required:
+      - login
+      - password
+    properties:
+      login:
+        type: string
+        format: email
+        example: yoanmolina15@gmail.com
+      password:
+        type: string
+        example: test123
+
+  EmailOnly:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        format: email
+        example: yoanmolina15@gmail.com
+
+  ResetPassword:
+    type: object
+    required:
+      - token
+      - newPassword
+    properties:
+      token:
+        type: string
+        example: "9a8bcf..."
+      newPassword:
+        type: string
+        example: NewStrongPassword1!
