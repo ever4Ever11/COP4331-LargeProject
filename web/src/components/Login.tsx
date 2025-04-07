@@ -78,7 +78,7 @@ const Login: React.FunctionComponent = () => {
 			};
 
 			localStorage.setItem('user_data', JSON.stringify(user));
-			window.location.href = '/search';
+			window.location.href = '/build-itinerary';
 		} catch (error: unknown) {
 			alert(error?.toString());
 			return;

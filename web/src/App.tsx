@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage.tsx';
 import Loginpage from './pages/Loginpage.tsx';
 import Signuppage from './pages/Signuppage.tsx';
-import Searchpage from './pages/Searchpage';
+import BuildItineraryPage from './pages/BuildItineraryPage.tsx';
 import Infopage from './pages/Infopage';
 import Bookmarkpage from './pages/Bookmarkpage.tsx';
 import Teampage from './pages/Teampage.tsx';
@@ -27,8 +27,8 @@ const App = () => {
 					element={<Signuppage />}
 				>
 				</Route>
-				<Route path="/search"
-					element={<Searchpage />}
+				<Route path="/build-itinerary"
+					element={<BuildItineraryPage />}
 				>
 				</Route>
 				<Route path="/info"
