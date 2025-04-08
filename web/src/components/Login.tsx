@@ -88,12 +88,10 @@ const Login: React.FunctionComponent = () => {
 	return (
 		<div className="loginDiv grid grid-cols-1 md:grid-cols-2 md:min-h-[500px]">
 			<dialog className="border-2 border-cyan-700 rounded-xl space-y-8 flex-col justify-center items-center text-center md:text-left py-10 px-10 md:items-start" ref={forgetPasswordDialogRef}>
-				<p className='mt-2 px-2'>Reset Password</p>
+				<p className='mt-2 px-2 justify-center items-center text-center'>Reset Password</p>
 				<form onSubmit={doPasswordReset}>
 					<div className="mb-4">
-						<label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="resetEmail">
-						<FaIcons.FaMailBulk/> <p className="ml-3"> Email </p>
-						</label>
+						<label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="resetEmail">Email</label>
 						<input
 							type="email"
 							id="resetEmail"

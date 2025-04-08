@@ -46,27 +46,28 @@ const ImageUpload: React.FC = () => {
   };
 
   return (
-    <div className="float-right h-18 w-18 m-6">
-  <img 
-    src={avatarURL}
-    alt="Avatar"
-    className="w-20 h-20 rounded-full border-2 border-cyan-700" /> 
+    <div className="text-xl text-gray-900 py-10 flex items-center space-x-4">
+      <img 
+        src={avatarURL}
+        alt="Avatar"
+        className="w-24 h-24 rounded-full border-2 border-black" /> 
 
-  <form id="form" encType="multipart/form-data">
-    <button
-      type="submit"
-      onClick={handleImageUpload}
-      className="bg-white absolute right-14 top-20 rounded-full border-none hover:text-cyan-700">
-      <FaIcons.FaCloudUploadAlt/>
-    </button>
-    <input 
-      type="file"
-      id="file"
-      ref={fileUploadRef}
-      onChange={uploadImageDisplay}
-      hidden />
-  </form>  
-</div>
+      <form id="form" encType="multipart/form-data" className="flex items-center">
+        <button
+          type="submit"
+          onClick={handleImageUpload}
+          className="bg-cyan-700 rounded-full text-white border-none hover:text-yellow-500 p-1">
+          <FaIcons.FaCloudUploadAlt/>
+        </button>
+      <input 
+          type="file"
+          id="file"
+          ref={fileUploadRef}
+          onChange={uploadImageDisplay}
+          hidden />
+      </form>  
+    </div>
+
 
   );
 }

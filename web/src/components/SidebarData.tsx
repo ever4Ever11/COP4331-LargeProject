@@ -7,9 +7,9 @@ export const SidebarData = [
         icon: <FaIcons.FaUser />
     },
     {
-        title: 'Build Itinerary',
+        title: 'Itinerary',
         path: '/build-itinerary',
-        icon: <FaIcons.FaSearch />
+        icon: <FaIcons.FaEdit />
     },
     {
         title: 'Bookmark',

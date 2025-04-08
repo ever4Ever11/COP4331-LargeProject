@@ -1,7 +1,6 @@
 import React from "react";
 //import { buildPath } from './Path.tsx';
-//import * as FaIcons from 'react-icons/fa';
-//import Bannerimage from "../assets/8.png";
+import * as FaIcons from 'react-icons/fa';
 import Itinerary from "./Itinerary";
 import { newItineraryOptions, newItinerary } from "../utility/Itinerary";
 import { ItineraryProps } from "../types/Itinerary";
@@ -97,18 +96,41 @@ const BuildItinerary: React.FunctionComponent = () => {
   if (generatedItinerary) {
     return (
       <>
+        <div className="container container mt-10 py-5 max-w-3xl border-4 border-cyan-700 py-14 max-w-5xl mx-auto bg-cover">
         <Itinerary {...generatedItinerary} />
-        <button type="button" onClick={() => {setGeneratedItinerary(null); setSaved(false);}}>Try Again</button>
-        <button type="button" onClick={saveItinerary} disabled={saved}>Save</button>
+        <div className="flex space-x-4 items-center justify-center mt-5">
+        <button type="button" className="bg-black text-white px-4 py-2 rounded hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={() => {setGeneratedItinerary(null); setSaved(false);}}>Try Again</button>
+        <button type="button" className="bg-black text-white px-4 py-2 rounded hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={saveItinerary} disabled={saved}>Save</button>
+        </div>
+        </div>
       </>
     );
   }
 
   return (
-    <form onSubmit={generateItinerary} autoComplete="off">
+  <div className="container mt-10 py-5 max-w-3xl border-4 rounded-lg border-cyan-700 mx-auto bg-cover">
+    <div className="relative border-2 border-cyan-700 rounded-full text-4xl font-extrabold py-5 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-cyan-700 shadow-xl animate-pulse text-shadow-xl">
+     <FaIcons.FaPen className="absolute top-0 left-0 text-cyan-700 text-xl m-2" />
+      Travel Itinerary
+    </div>
+    <div className="py-5 text-ml font-semibold flex justify-between items-center">
+      <p className="px-10">DATE: ________/________/________</p>
+      <p className="flex items-center">
+        FORECAST: 
+        <FaIcons.FaSun className="px-2 text-3xl" />
+        <FaIcons.FaCloudRain className="px-2 text-3xl" />
+        <FaIcons.FaWind className="px-2 text-3xl" />
+        <FaIcons.FaPooStorm className="px-2 text-3xl" />
+      </p>
+    </div>
+    <div>
+      <p className="font-semibold">
+      NOTES:__________________________________________________________________
+      </p>
+    </div>
 
-      <p>Your Next Adventure Awaits!</p>
-
+    <form onSubmit={generateItinerary} autoComplete="off" className="py-5">
+      <div className="space-y-4 grid grid-rows-5 gap-4 flex bg-cyan-700 py-5 p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-x">
       {suggestionListNames.map((name) =>
         <datalist id={`${name}Suggestions`}>
           {currentSuggestionLists && currentSuggestionLists[name].map((suggestion) =>
@@ -116,25 +138,80 @@ const BuildItinerary: React.FunctionComponent = () => {
           )}
         </datalist>
       )}
+  <div className="flex items-center justify-center gap-4 border-b-2">
+    <FaIcons.FaLocationArrow className="text-white text-xl" />
+    <label htmlFor="location" className="text-xl font-semibold text-white">Enter travel destination:</label>
+    <input
+    id="location"
+    type="text"
+    list="locationSuggestions"
+    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    placeholder="(e.g., London, Tokyo, Vancouver)"
+    onChange={handleInput}
+    />
+  </div>
 
-      <label htmlFor="location">Enter your destination:</label>
-      <input id="location" type="text" list="locationSuggestions" placeholder="(e.g., London, Tokyo, Vancouver)" onChange={handleInput} />
+  <div className="flex items-center justify-center gap-4 py-2 border-b-2">
+    <FaIcons.FaCalendarTimes className="text-white text-xl" />
+    <label htmlFor="duration" className="text-xl font-semibold text-white">Enter travel duration:</label>
+    <input
+    id="duration"
+    type="number"
+    min="1"
+    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    onChange={handleInput}
+    />
+  </div>
 
-      <label htmlFor="duration">Enter the number of days:</label>
-      <input id="duration" type="number" min="1" onChange={handleInput} />
+  <div className="flex items-center justify-center gap-4 py-2 border-b-2">
+   <FaIcons.FaMoneyBillAlt className="text-white text-xl" />
+   <label htmlFor="budget" className="text-xl font-semibold text-white">Enter travel budget:</label>
+   <input
+    id="budget"
+    type="text"
+    list="budgetSuggestions"
+    placeholder="(e.g., low, medium, high)"
+    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    onChange={handleInput}
+   />
+  </div>
 
-      <label htmlFor="budget">Enter your budget:</label>
-      <input id="budget" type="text" list="budgetSuggestions" placeholder="(e.g., low, medium, high)" onChange={handleInput} />
+  <div className="flex items-center justify-center gap-4 py-2 border-b-2">
+   <FaIcons.FaHiking className="text-white text-xl" />
+   <label htmlFor="interests" className="text-xl font-semibold text-white">Enter travel interests:</label>
+   <input
+    id="interests"
+    type="text"
+    list="interestsSuggestions"
+    placeholder="(e.g., adventure, culture, relaxation)"
+    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    onChange={handleInput}
+   />
+  </div>
 
-      <label htmlFor="interests">Enter your interests:</label>
-      <input id="interests" type="text" list="interestsSuggestions" placeholder="(e.g., adventure, culture, relaxation)" onChange={handleInput} />
+  <div className="flex items-center justify-center gap-4 py-2 border-b-2">
+   <FaIcons.FaHotel className="text-white text-xl" />
+   <label htmlFor="travelStyle" className="text-xl font-semibold text-white">Enter travel style:</label>
+   <input
+    id="travelStyle"
+    type="text"
+    list="travelStyleSuggestions"
+    placeholder="(e.g., solo, family, luxury, backpacking)"
+    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    onChange={handleInput}
+   />
+  </div>
 
-      <label htmlFor="travelStyle">Enter your travel style:</label>
-      <input id="travelStyle" type="text" list="travelStyleSuggestions" placeholder="(e.g., solo, family, luxury, backpacking)" onChange={handleInput} />
+  <div className="flex justify-center py-5">
+    <button type="submit" className="w-64 h-12 p-4 text-lg rounded-lg border-gray-300 bg-black text-white flex items-center justify-center space-x-2 hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50">
+    <FaIcons.FaPlane />
+    <span>let's go</span>
+    </button>
+  </div>
 
-      <button type="submit">let's go</button>
-
-    </form>
+     </div> 
+    </form> 
+  </div>
   );
 };
 

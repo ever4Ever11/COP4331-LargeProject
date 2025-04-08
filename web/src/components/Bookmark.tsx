@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import Itinerary from "./Itinerary";
 import { ItineraryProps } from "../types/Itinerary";
 import * as FaIcons from 'react-icons/fa';
-import Bannerimage from "../assets/9.png";
 
 const Bookmarks: React.FunctionComponent = () => {
   const selectedItineraryDialogRef = useRef<HTMLDialogElement>(null);
@@ -24,7 +23,7 @@ const Bookmarks: React.FunctionComponent = () => {
     setFilteredItineraries(storedItineraries);
   }, []);
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 4;
   const totalItems = filteredItineraries.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   if (0 < totalItems && totalPages < currentPage) {
@@ -108,9 +107,8 @@ const Bookmarks: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="container py-14 max-w-5xl mx-auto bg-cover" style={{ backgroundImage: `url(${Bannerimage})`}}>
-
-      <dialog ref={selectedItineraryDialogRef}>
+    <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-lg">
+      <dialog className="" ref={selectedItineraryDialogRef}>
         {selectedItinerary && <Itinerary {...selectedItinerary} />}
         <div className="flex justify-center">
           <button type="button" onClick={() => { selectedItineraryDialogRef.current?.close() }} className='border-none'>Back</button>
@@ -118,14 +116,11 @@ const Bookmarks: React.FunctionComponent = () => {
       </dialog>
 
       {/*Filter Bar*/}
-      <form className="max-w-lg mx-auto">
-        <div className="flex">
-
-          <div className="relative w-full">
+      <form className="relative w-60 mx-auto items-center">
           <input type="search"
                  id="filter"
                  onChange={(e) => {setKeyword(e.target.value);}}
-                 className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-cyan-700 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-yellow-500"
+                 className="block p-3 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-cyan-700 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-yellow-500"
                  placeholder="Search Keywords" value={keyword} />
           <button type="button"
                   onClick={() => {filterItineraries();}}
@@ -139,13 +134,10 @@ const Bookmarks: React.FunctionComponent = () => {
           </svg>
           <span className="sr-only">Search</span>
           </button>
-          </div>
-
-        </div>
       </form>
 
       {/*Cards*/}
-      <div className="grid grid-cols-2 gap-4 p-6 py-8 ">
+      <div className="grid grid-cols-2 gap-4 p-6 py-8 mt-5 bg-white">
         {getPageData().map((element) => (
           <div className="p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl hover:translate-y-[-10px] transition-all"
                key={element.created}>
@@ -156,14 +148,15 @@ const Bookmarks: React.FunctionComponent = () => {
               <div>Duration: {element.parameters.duration}</div>
               <div>Budget: {element.parameters.budget}</div>
               <div>Travel Style: {element.parameters.travelStyle}</div>
+              <div className="flex justify-end gap-4">
               <div onClick={() => {setSelectedItinerary(element); selectedItineraryDialogRef.current?.showModal();}}>
-                <FaIcons.FaEye className="text-gray-500 text-3xl transition-transform transform hover:scale-125" />
+                <FaIcons.FaEye className="text-cyan-700 text-2xl transition-transform transform hover:scale-125" />
               </div>
               <div onClick={() => deleteItinerary(element.created)}>
-                <FaIcons.FaTrash className="text-gray-500 text-3xl transition-transform transform hover:scale-125" />
+                <FaIcons.FaTrash className="text-cyan-700 text-2xl transition-transform transform hover:scale-125" />
               </div>
             </div>
-
+            </div>
           </div>
         ))}
       </div>

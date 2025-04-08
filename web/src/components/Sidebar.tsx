@@ -6,7 +6,6 @@ import { SidebarData } from './SidebarData'
 import styled from 'styled-components'
 import Logo from "../assets/logo.png";
 import { motion } from "framer-motion"
-import ImageUpload from "./ImageUpload"
 import { slideUp, slideBottom  } from "../utility/animation"
 
 
@@ -130,9 +129,8 @@ const Sidebar: React.FunctionComponent = () => {
             animate="animate"
             className="bg-white rounded-lg font-bold text-2xl text-right"
             >
-             <p className='italic'>
-            Welcome, {firstName} {lastName}
-            <ImageUpload />
+            <p className='italic'>
+            Welcome, {firstName} {lastName} !
             </p>           
             </motion.div>
 

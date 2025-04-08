@@ -1,5 +1,6 @@
 import React from 'react';
-import Bannerimage from "../assets/10.png";
+import ImageUpload from "./ImageUpload";
+import * as FaIcons from 'react-icons/fa';
 
 type Data = {
   id: number;
@@ -20,21 +21,34 @@ const Info: React.FunctionComponent = () => {
       user = JSON.parse(data);
   }
   return (
-    <div className="container py-14 max-w-5xl mx-auto bg-cover" style={{ backgroundImage: `url(${Bannerimage})`}}>
-      <div className="space-y-4">
-          <div key={user.id} className="py-20 p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl">
-            <div className="text-xl text-gray-900 py-10">
-              <strong>Email:</strong> {user.email}
-            </div>
-            <div className="text-xl text-gray-900 py-10">
-              <strong>First Name:</strong> {user.firstName}
-            </div>
-            <div className="text-xl text-gray-900 py-10">
-              <strong>Last Name:</strong> {user.lastName}
-            </div>
-          </div>
+  <div className="container py-14 mt-10 max-w-3xl mx-auto bg-cyan-700 rounded-2xl shadow-lg flex flex-col items-center justify-center text-center">
+    <p className="text-3xl font-bond text-yellow-500">My profile</p>
+    <div key={user.id} className="w-full">
+    <div className="flex justify-center items-center space-x-4 mb-8">
+      <div className="flex justify-center">
+      <ImageUpload />
       </div>
+    </div>   
+    <div className="text-xl text-white space-y-6 flex flex-col items-center">
+      <div className="py-4 flex items-center space-x-2">
+       <FaIcons.FaMailBulk />
+        <strong>Email:</strong> <span>{user.email}</span>
+      </div>
+      <div className="py-4 flex items-center space-x-2">
+        <FaIcons.FaUser />
+        <strong>First Name:</strong> <span>{user.firstName}</span>
+      </div>
+      <div className="py-4 flex items-center space-x-2">
+        <FaIcons.FaUser />
+        <strong>Last Name:</strong> <span>{user.lastName}</span>
+      </div>
+</div>
+
+
     </div>
+  </div>
+
+
   );
 };
 

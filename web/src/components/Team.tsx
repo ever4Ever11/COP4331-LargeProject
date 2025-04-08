@@ -1,5 +1,5 @@
 import React from 'react';
-import Bannerimage from "../assets/10.png";
+import * as FaIcons from 'react-icons/fa';
 
 type Data = {
     id: number;
@@ -19,20 +19,23 @@ const sampleData: Data[] = [
   
 const Team: React.FunctionComponent = () => {
     return (
-      <div className="container py-14 max-w-5xl mx-auto bg-cover border-4 rounded-lg border-cyan-700" style={{ backgroundImage: `url(${Bannerimage})`}}>
-       <div className="grid grid-cols-3 gap-4 border-2 rounded-lg border-cyan-700"> 
+      <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-xl">
+        <div className="grid grid-cols-3 gap-6 justify-items-center rounded-lg bg-gray-200 ">
           {sampleData.map((row) => (
-            <div key={row.id} className="w-50 h-50 py-10 p-8 flex items-center justify-center hover:shadow-xl">
-              <div className="p-8 text-xl text-gray-900">
-                <strong>{row.Name}</strong> 
-              </div>
-              <div className="p-8 text-gray-900">
-                {row.role} 
-              </div>
-            </div>
-          ))}
+          <div
+            key={row.id}
+            className="w-48 h-48 py-10 flex border-4 border-cyan-700 rounded-full items-center justify-center hover:shadow-xl"
+            >
+          <div className="text-xl text-gray-900 flex items-center space-x-2">
+            <FaIcons.FaUserAlt />
+            <strong>{row.Name}</strong>
+          </div>
+          <div className="text-gray-900">{row.role}</div>
+          </div>
+    ))}
         </div>
-    </div>
+      </div>
+
     );
   };
   
