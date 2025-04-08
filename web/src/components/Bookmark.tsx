@@ -137,6 +137,7 @@ const Bookmarks: React.FunctionComponent = () => {
       </form>
 
       {/*Cards*/}
+      {totalItems > 0 ?
       <div className="grid grid-cols-2 gap-4 p-6 py-8 mt-5 bg-white">
         {getPageData().map((element) => (
           <div className="p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl hover:translate-y-[-10px] transition-all"
@@ -160,6 +161,12 @@ const Bookmarks: React.FunctionComponent = () => {
           </div>
         ))}
       </div>
+      :
+      <p className="p-6 py-8 mt-5 bg-white text-2xl">
+        You have no Bookmarks,<br/> 
+        Please go to create your first itinerary! 
+      </p>
+      }
 
       {/*Page Selection Bar*/}
       <div className="flex justify-between items-center py-4">
