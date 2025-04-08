@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'path.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'login_screen.dart'; // ✅ Import LoginScreen
-import 'search_screen.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
