@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final Timer timer;
   int _currentImageIndex = 0;
   final List<String> _imagePaths = [
     'assets/images/place1.jpg',
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+    timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % _imagePaths.length;
       });
@@ -121,6 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 }
 
