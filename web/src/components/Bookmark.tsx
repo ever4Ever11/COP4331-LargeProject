@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Itinerary from "./Itinerary";
 import { ItineraryProps } from "../types/Itinerary";
 import * as FaIcons from 'react-icons/fa';
+import Img from "../assets/bookmark.png";
 
 const Bookmarks: React.FunctionComponent = () => {
   const selectedItineraryDialogRef = useRef<HTMLDialogElement>(null);
@@ -161,12 +162,14 @@ const Bookmarks: React.FunctionComponent = () => {
         ))}
       </div>
       :
-      <p className="p-6 py-8 mt-5 bg-white text-2xl">
+      <div className="p-6 py-5 mt-5 bg-white text-2xl">        
+      <img src={Img} alt="loading" className="py-5 w-[450px] mx-auto md:max-w-[400px]"/>
+      <p className="p-6 py-5 mt-5 font-bond">
         You have no Bookmarks,<br/> 
         Please go to create your first itinerary! 
       </p>
+      </div>
       }
-
       {/*Page Selection Bar*/}
       <div className="flex justify-between items-center py-4">
 

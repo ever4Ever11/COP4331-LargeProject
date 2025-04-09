@@ -24,7 +24,7 @@ const Team: React.FunctionComponent = () => {
           {sampleData.map((row) => (
           <div
             key={row.id}
-            className="bg-gray-200 w-48 h-48 py-10 flex border-4 border-cyan-700 rounded-full items-center justify-center hover:shadow-xl"
+            className="bg-gray-200 w-48 h-48 py-5 px-5 mt-5 mb-5 flex border-4 border-cyan-700 rounded-full items-center justify-center hover:shadow-xl"
             >
           <div className="text-xl text-gray-900 flex items-center space-x-2">
             <FaIcons.FaUserAlt />
