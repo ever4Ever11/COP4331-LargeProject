@@ -108,10 +108,10 @@ const Bookmarks: React.FunctionComponent = () => {
 
   return (
     <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-lg">
-      <dialog className="" ref={selectedItineraryDialogRef}>
+      <dialog className="max-w-4xl border-4 border-cyan-700 py-5 px-8 mx-auto" ref={selectedItineraryDialogRef}>
         {selectedItinerary && <Itinerary {...selectedItinerary} />}
         <div className="flex justify-center">
-          <button type="button" onClick={() => { selectedItineraryDialogRef.current?.close() }} className='border-none'>Back</button>
+          <button type="button" onClick={() => { selectedItineraryDialogRef.current?.close() }} className="text-white bg-black mt-5 border-none hover:text-yellow-500">Back</button>
         </div>
       </dialog>
 
@@ -140,15 +140,14 @@ const Bookmarks: React.FunctionComponent = () => {
       {totalItems > 0 ?
       <div className="grid grid-cols-2 gap-4 p-6 py-8 mt-5 bg-white">
         {getPageData().map((element) => (
-          <div className="p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl hover:translate-y-[-10px] transition-all"
+          <div className="bg-gray-200 p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl hover:translate-y-[-10px] transition-all"
                key={element.created}>
-
             <div className="text-xl font-semibold text-gray-700">
-              <div>Created: {new Date(element.created).toDateString()}</div>
-              <div>Destination: {element.parameters.location}</div>
-              <div>Duration: {element.parameters.duration}</div>
-              <div>Budget: {element.parameters.budget}</div>
-              <div>Travel Style: {element.parameters.travelStyle}</div>
+              <div>🗓️ Created: {new Date(element.created).toDateString()}</div>
+              <div>🌆 Destination: {element.parameters.location}</div>
+              <div>⏳ Duration: {element.parameters.duration}</div>
+              <div>💰 Budget: {element.parameters.budget}</div>
+              <div>🏖️ Travel Style: {element.parameters.travelStyle}</div>
               <div className="flex justify-end gap-4">
               <div onClick={() => {setSelectedItinerary(element); selectedItineraryDialogRef.current?.showModal();}}>
                 <FaIcons.FaEye className="text-cyan-700 text-2xl transition-transform transform hover:scale-125" />

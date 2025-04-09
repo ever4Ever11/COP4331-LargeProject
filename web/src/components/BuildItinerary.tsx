@@ -96,7 +96,7 @@ const BuildItinerary: React.FunctionComponent = () => {
   if (generatedItinerary) {
     return (
       <>
-        <div className="container container mt-10 py-5 max-w-3xl border-4 border-cyan-700 py-14 max-w-5xl mx-auto bg-cover">
+        <div className="container mt-10 py-5 max-w-3xl border-4 border-cyan-700 py-14 max-w-5xl mx-auto bg-cover">
         <Itinerary {...generatedItinerary} />
         <div className="flex space-x-4 items-center justify-center mt-5">
         <button type="button" className="bg-black text-white px-4 py-2 rounded hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={() => {setGeneratedItinerary(null); setSaved(false);}}>Try Again</button>
@@ -145,8 +145,8 @@ const BuildItinerary: React.FunctionComponent = () => {
     id="location"
     type="text"
     list="locationSuggestions"
-    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
-    placeholder="(e.g., London, Tokyo, Vancouver)"
+    placeholder="London, Tokyo, Vancouver,..."
+    className="w-60 h-10 p-4 text-sm border border-gray-300 rounded-lg" 
     onChange={handleInput}
     />
   </div>
@@ -158,7 +158,8 @@ const BuildItinerary: React.FunctionComponent = () => {
     id="duration"
     type="number"
     min="1"
-    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    placeholder="enter a number: 1, 2, 3,..."
+    className="w-60 h-10 p-4 text-sm border-2 border-gray-300 rounded-lg"
     onChange={handleInput}
     />
   </div>
@@ -170,8 +171,8 @@ const BuildItinerary: React.FunctionComponent = () => {
     id="budget"
     type="text"
     list="budgetSuggestions"
-    placeholder="(e.g., low, medium, high)"
-    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    placeholder="low, medium, high..."
+    className="w-60 h-10 p-4 text-sm border-2 border-gray-300 rounded-lg"
     onChange={handleInput}
    />
   </div>
@@ -183,8 +184,8 @@ const BuildItinerary: React.FunctionComponent = () => {
     id="interests"
     type="text"
     list="interestsSuggestions"
-    placeholder="(e.g., adventure, culture, relaxation)"
-    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    placeholder="adventure, culture, relaxation,..."
+    className="w-60 h-10 p-4 text-sm border-2 border-gray-300 rounded-lg"
     onChange={handleInput}
    />
   </div>
@@ -196,8 +197,8 @@ const BuildItinerary: React.FunctionComponent = () => {
     id="travelStyle"
     type="text"
     list="travelStyleSuggestions"
-    placeholder="(e.g., solo, family, luxury, backpacking)"
-    className="w-60 h-10 p-4 text-lg border border-gray-300 rounded-lg"
+    placeholder="solo, family, luxury, backpacking,..."
+    className="w-60 h-10 p-4 text-sm border-2 border-gray-300 rounded-lg"
     onChange={handleInput}
    />
   </div>

@@ -20,11 +20,11 @@ const sampleData: Data[] = [
 const Team: React.FunctionComponent = () => {
     return (
       <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-xl">
-        <div className="grid grid-cols-3 gap-6 justify-items-center rounded-lg bg-gray-200 ">
+        <div className="grid grid-cols-3 gap-6 justify-items-center rounded-lg bg-white">
           {sampleData.map((row) => (
           <div
             key={row.id}
-            className="w-48 h-48 py-10 flex border-4 border-cyan-700 rounded-full items-center justify-center hover:shadow-xl"
+            className="bg-gray-200 w-48 h-48 py-10 flex border-4 border-cyan-700 rounded-full items-center justify-center hover:shadow-xl"
             >
           <div className="text-xl text-gray-900 flex items-center space-x-2">
             <FaIcons.FaUserAlt />
