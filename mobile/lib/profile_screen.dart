@@ -1,5 +1,6 @@
 // file: profile_screen.dart
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final Map<String, dynamic> user;
@@ -11,9 +12,24 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Profile")),
       body: Center(
-        child: Text(
-          "${user['firstName']} ${user['lastName']}",
-          style: const TextStyle(fontSize: 24),
+        child: Column(
+          children: [
+            Text(
+              "${user['firstName']} ${user['lastName']}",
+              style: const TextStyle(fontSize: 24),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => LoginScreen()
+                  ), 
+                  (Route route) => false
+                );
+              },
+              child: Text('Logout'),
+            ),
+          ],
         ),
       ),
     );
