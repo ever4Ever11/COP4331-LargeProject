@@ -1,4 +1,4 @@
-import HomeImg from "../assets/1.png";
+import HomeImg from "../assets/1.webp";
 import { motion } from "framer-motion";
 import { slideUp, slideBottom } from "../utility/animation";
 

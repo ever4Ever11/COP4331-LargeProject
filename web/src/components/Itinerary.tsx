@@ -1,11 +1,31 @@
 import React from "react";
 import ReactMarkdown from 'react-markdown';
 import { ItineraryProps } from "../types/Itinerary";
-import Img from "../assets/backpacking.png";
+import Img0 from "../assets/any.jpeg";
+import Img1 from "../assets/solo.jpeg";
+import Img2 from "../assets/family.jpeg";
+import Img3 from "../assets/luxury.jpeg";
+import Img4 from "../assets/backpacking.jpeg";
 
 const Itinerary: React.FunctionComponent<ItineraryProps> = ({created, parameters, content}) => {
 
   const formatedDate = new Date(created).toDateString();
+
+  let uri = Img0;
+  switch (parameters.travelStyle) {
+    case 'solo':
+      uri = Img1;
+      break;
+    case 'family':
+      uri = Img2;
+      break;
+    case 'luxury':
+      uri = Img3;
+      break;
+    case 'backpacking':
+      uri = Img4;
+      break;
+  }
 
   return (
     <>
@@ -19,11 +39,7 @@ const Itinerary: React.FunctionComponent<ItineraryProps> = ({created, parameters
       <p><span className="font-semibold text-white py-2">🏖️ Travel Style:</span><span className="px-2 font-semibold text-white">{parameters.travelStyle}</span></p>
     </div>
     <div>
-      <img 
-      src={Img}
-      alt="Avatar"
-      className="w-40 h-40 rounded-lg border-2 border-white" 
-      />
+      {uri && <img src={uri} alt="Avatar" className="w-40 h-40 rounded-lg border-2 border-white" />}
     </div>
     </div>
     <div className="prose text-left mt-5">

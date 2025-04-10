@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BackgroundImage from "../assets/7.png";
+import BackgroundImage from "../assets/7.webp";
 import { motion } from "framer-motion";
 import * as FaIcons from 'react-icons/fa';
 import { buildPath } from '../components/Path.tsx';

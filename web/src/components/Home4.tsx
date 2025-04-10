@@ -1,6 +1,6 @@
-import Img1 from "../assets/icon/4.png";
-import Img2 from "../assets/icon/5.png";
-import Img3 from "../assets/icon/6.png";
+import Img1 from "../assets/icon/4.jpeg";
+import Img2 from "../assets/icon/5.jpeg";
+import Img3 from "../assets/icon/6.jpeg";
 import { motion } from "framer-motion";
 import { slideUp, slideBottom } from "../utility/animation";
 
@@ -24,7 +24,7 @@ const Home4 = () => {
               <p className="text-yellow-400 font-semibold text-xl">★★★★★</p>
               <p className="text-sm text-black italic">
               "I love how easy it is to navigate this site! 
-              The travel guides are incredibly helpful and helped me plan my trip with ease."
+              The travel itineraries are incredibly helpful and helped me plan my trip with ease."
               </p>
             </motion.div>
             <motion.div
@@ -41,7 +41,7 @@ const Home4 = () => {
               <p className="text-yellow-400 font-semibold text-xl">★★★★★</p>
               <p className="text-sm text-black italic">
               "This website has been a lifesaver for my travels! 
-              The tips, recommendations, and booking options are all top-notch."
+              The tips, recommendations, and itinerary options are all top-notch."
               </p>
             </motion.div>
             <motion.div
@@ -58,7 +58,7 @@ const Home4 = () => {
               <p className="text-yellow-400 font-semibold text-xl">★★★★</p>
               <p className="text-sm text-black italic">
               "Such a fantastic resource for planning trips! 
-              The information is reliable, and I always find great deals on this site."
+              The information is reliable, and I always find great recommendations on this site."
               </p>
               
             </motion.div>

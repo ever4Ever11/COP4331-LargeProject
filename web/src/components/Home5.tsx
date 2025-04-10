@@ -1,6 +1,6 @@
 import { FaMobile } from "react-icons/fa";
 import { motion } from "framer-motion";
-import HomeImg from "../assets/4.png";
+import HomeImg from "../assets/4.webp";
 import { slideUp, slideBottom } from "../utility/animation";
 
 
@@ -39,7 +39,7 @@ const Home5 = () => {
             >
               Let's  <br />
               start your  <br />
-              journey from <br />
+              journey with <br />
               <span className="text-cyan-700">wayfinder</span> 
             </motion.h1>
           </div>

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import BackgroundImage from "../assets/6.png";
+import BackgroundImage from "../assets/6.webp";
 import { motion } from "framer-motion";
 import { buildPath } from '../components/Path.tsx';
 import { jwtDecode } from 'jwt-decode';

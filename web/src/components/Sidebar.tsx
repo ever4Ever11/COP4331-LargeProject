@@ -4,7 +4,7 @@ import { useState } from 'react'
 import * as FaIcons from 'react-icons/fa' 
 import { SidebarData } from './SidebarData'
 import styled from 'styled-components'
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logo.webp";
 import { motion } from "framer-motion"
 import { slideUp, slideBottom  } from "../utility/animation"
 

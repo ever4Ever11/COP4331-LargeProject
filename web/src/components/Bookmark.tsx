@@ -141,20 +141,21 @@ const Bookmarks: React.FunctionComponent = () => {
       {totalItems > 0 ?
       <div className="grid grid-cols-2 gap-4 p-6 py-8 mt-5 bg-white">
         {getPageData().map((element) => (
-          <div className="bg-gray-200 p-8 rounded-lg shadow-lg border-2 border-cyan-700 hover:shadow-xl hover:translate-y-[-10px] transition-all"
+          <div className="bg-gray-200 p-8 rounded-lg shadow-lg border-2 border-cyan-700 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:cursor-pointer"
                key={element.created}>
             <div className="text-xl font-semibold text-gray-700">
               <div>🗓️ Created: {new Date(element.created).toDateString()}</div>
               <div>🌆 Destination: {element.parameters.location}</div>
               <div>⏳ Duration: {element.parameters.duration}</div>
               <div>💰 Budget: {element.parameters.budget}</div>
+              <div>🤔 Interests: {element.parameters.interests}</div>
               <div>🏖️ Travel Style: {element.parameters.travelStyle}</div>
               <div className="flex justify-end gap-4">
               <div onClick={() => {setSelectedItinerary(element); selectedItineraryDialogRef.current?.showModal();}}>
-                <FaIcons.FaEye className="text-cyan-700 text-2xl transition-transform transform hover:scale-125" />
+                <FaIcons.FaEye className="text-cyan-700 text-2xl transition-transform transform hover:scale-125 hover:cursor-pointer" />
               </div>
               <div onClick={() => deleteItinerary(element.created)}>
-                <FaIcons.FaTrash className="text-cyan-700 text-2xl transition-transform transform hover:scale-125" />
+                <FaIcons.FaTrash className="text-cyan-700 text-2xl transition-transform transform hover:scale-125 hover:cursor-pointer" />
               </div>
             </div>
             </div>
@@ -174,7 +175,7 @@ const Bookmarks: React.FunctionComponent = () => {
       <div className="flex justify-between items-center py-4">
 
         {/*Page Left*/}
-        <button className="px-4 py-2 text-white rounded-md bg-black hover:bg-cyan-700"
+        <button className="px-4 py-2 text-white rounded-md bg-black hover:bg-cyan-700 hover:cursor-pointer"
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage <= 1}>
         <FaIcons.FaArrowLeft/>
@@ -184,7 +185,7 @@ const Bookmarks: React.FunctionComponent = () => {
         <div className="flex space-x-2">{renderPagination()}</div>
 
         {/*Page Right*/}
-        <button className="px-4 py-2 text-white rounded-md bg-black hover:bg-cyan-700"
+        <button className="px-4 py-2 text-white rounded-md bg-black hover:bg-cyan-700 hover:cursor-pointer"
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage >= totalPages}>
         <FaIcons.FaArrowRight/>
