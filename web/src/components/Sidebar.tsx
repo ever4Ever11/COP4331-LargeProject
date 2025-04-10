@@ -104,6 +104,7 @@ const Sidebar: React.FunctionComponent = () => {
             <button 
             type="button"
             id="logoutButton"
+            aria-label="logout"
             onClick={doLogout}            
             style={{ float: 'right' }} 
             className="text-3xl border-0 bg-transparent p-0 hover:border-0 hover:text-cyan-700 focus:outline-none cursor-pointer">
@@ -136,7 +137,7 @@ const Sidebar: React.FunctionComponent = () => {
 
             {/* sideMenu section */}
             <SidebarMenu close={close}>
-                <MenuIconClose to="#" onClick={showSidebar}>
+                <MenuIconClose to="#" aria-label="menuClose" onClick={showSidebar}>
                 <FaIcons.FaTimes />
                 </MenuIconClose>
                 {SidebarData.map((item, index) => {

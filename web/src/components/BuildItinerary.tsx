@@ -91,6 +91,7 @@ const BuildItinerary: React.FunctionComponent = () => {
     storedItineraries.push(generatedItinerary);
     localStorage.setItem('itineraries', JSON.stringify(storedItineraries));
     setSaved(true);
+    alert("Your Itinerary has been Saved !")
   };
 
   if (generatedItinerary) {

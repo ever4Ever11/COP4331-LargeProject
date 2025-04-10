@@ -55,6 +55,7 @@ const ImageUpload: React.FC = () => {
       <form id="form" encType="multipart/form-data" className="flex items-center">
         <button
           type="submit"
+          aria-label="uploadImage"
           onClick={handleImageUpload}
           className="bg-cyan-700 rounded-full text-white border-none hover:text-yellow-500 p-1">
           <FaIcons.FaCloudUploadAlt/>

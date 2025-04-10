@@ -22,7 +22,7 @@ const Info: React.FunctionComponent = () => {
   }
   return (
   <div className="container py-14 mt-10 max-w-3xl mx-auto bg-cyan-700 rounded-2xl shadow-lg flex flex-col items-center justify-center text-center">
-    <p className="text-3xl font-bond text-yellow-500">MY PROFILE</p>
+    <p className="text-3xl font-bond text-white">MY PROFILE</p>
     <div key={user.id} className="w-full">
     <div className="flex justify-center items-center space-x-4 mb-8">
       <div className="flex justify-center">

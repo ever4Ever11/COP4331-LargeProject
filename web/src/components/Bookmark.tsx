@@ -72,40 +72,40 @@ const Bookmarks: React.FunctionComponent = () => {
   };
 
   const renderPagination = () => {
-
-    if (totalItems < 1) {
-      return [];
-    }
-
-    let firstPage = currentPage - 5;
-    let lastPage = currentPage + 5;
-    if (currentPage - 5 < 1 && totalPages < currentPage + 5 ) {
+    if (totalItems < 1) return [];
+  
+    let firstPage, lastPage;
+  
+    if (totalPages <= 5) {
       firstPage = 1;
       lastPage = totalPages;
-    }
-    else if (currentPage - 5 < 1) {
+    } else if (currentPage <= 3) {
       firstPage = 1;
-      lastPage = 10;
-    }
-    else if (totalPages < currentPage + 5) {
-      firstPage = totalPages - 9;
+      lastPage = 5;
+    } else if (currentPage >= totalPages - 2) {
+      firstPage = totalPages - 4;
       lastPage = totalPages;
+    } else {
+      firstPage = currentPage - 2;
+      lastPage = currentPage + 2;
     }
-
-    const pages=[];
+  
+    const pages = [];
     for (let i = firstPage; i <= lastPage; i++) {
       pages.push(
-        <button key={i}
-                className={`px-4 py-2 mx-1 text-sm font-semibold rounded-md 
-                            ${i === currentPage ? 'bg-black text-white' : 'bg-white text-black'} 
-                            hover:bg-cyan-700 hover:text-white focus:outline-none`}
-                onClick={() => setCurrentPage(i)}>
+        <button
+          key={i}
+          className={`px-4 py-2 mx-1 text-sm font-semibold rounded-md 
+                      ${i === currentPage ? 'bg-black text-white' : 'bg-white text-black'} 
+                      hover:text-yellow-500 focus:outline-none`}
+          onClick={() => setCurrentPage(i)}
+        >
           {i}
         </button>
       );
-    }
+    }  
     return pages;
-  };
+  }; 
 
   return (
     <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-lg">
@@ -121,11 +121,11 @@ const Bookmarks: React.FunctionComponent = () => {
           <input type="search"
                  id="filter"
                  onChange={(e) => {setKeyword(e.target.value);}}
-                 className="block p-3 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-cyan-700 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-yellow-500"
+                 className="block p-3 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-cyan-700 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400"
                  placeholder="Search Keywords" value={keyword} />
           <button type="button"
                   onClick={() => {filterItineraries();}}
-                  className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-black rounded-e-lg border border-cyan-700 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-black rounded-e-lg border border-cyan-700 hover:text-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
           <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
           <path stroke="currentColor"
                 stroke-linecap="round"
@@ -163,6 +163,12 @@ const Bookmarks: React.FunctionComponent = () => {
         ))}
       </div>
       :
+      (allItineraries.length > 0 ?
+      <div className="p-6 py-5 mt-5 bg-white text-2xl">        
+      <img src={Img} alt="loading" className="py-5 w-[450px] mx-auto md:max-w-[400px]"/>
+      <p className="p-6 py-5 mt-5 font-bond"> No Bookmarks have been found! </p>
+      </div>
+      :
       <div className="p-6 py-5 mt-5 bg-white text-2xl">        
       <img src={Img} alt="loading" className="py-5 w-[450px] mx-auto md:max-w-[400px]"/>
       <p className="p-6 py-5 mt-5 font-bond">
@@ -170,12 +176,13 @@ const Bookmarks: React.FunctionComponent = () => {
         Please go to create your first itinerary! 
       </p>
       </div>
-      }
+      )}
+
       {/*Page Selection Bar*/}
       <div className="flex justify-between items-center py-4">
 
         {/*Page Left*/}
-        <button className="px-4 py-2 text-white rounded-md bg-black hover:bg-cyan-700 hover:cursor-pointer"
+        <button className="px-4 py-2 text-white rounded-md bg-black hover:text-yellow-500 hover:cursor-pointer"
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage <= 1}>
         <FaIcons.FaArrowLeft/>
@@ -185,7 +192,7 @@ const Bookmarks: React.FunctionComponent = () => {
         <div className="flex space-x-2">{renderPagination()}</div>
 
         {/*Page Right*/}
-        <button className="px-4 py-2 text-white rounded-md bg-black hover:bg-cyan-700 hover:cursor-pointer"
+        <button className="px-4 py-2 text-white rounded-md bg-black hover:text-yellow-500 hover:cursor-pointer"
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage >= totalPages}>
         <FaIcons.FaArrowRight/>
