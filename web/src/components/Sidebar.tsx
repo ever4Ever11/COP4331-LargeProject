@@ -111,7 +111,7 @@ const Sidebar: React.FunctionComponent = () => {
             <FaIcons.FaSignOutAlt/>
             </button>
             <Navbar>
-                <MenuIconOpen to="#" onClick={showSidebar}>
+                <MenuIconOpen to="#" aria-label="MenuOpen" onClick={showSidebar}>
                 <FaIcons.FaBars />
                 </MenuIconOpen>
                 {/* Logo section */}

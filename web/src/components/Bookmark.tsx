@@ -183,6 +183,7 @@ const Bookmarks: React.FunctionComponent = () => {
 
         {/*Page Left*/}
         <button className="px-4 py-2 text-white rounded-md bg-black hover:text-yellow-500 hover:cursor-pointer"
+                aria-label="PageLeft"
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage <= 1}>
         <FaIcons.FaArrowLeft/>
@@ -193,6 +194,7 @@ const Bookmarks: React.FunctionComponent = () => {
 
         {/*Page Right*/}
         <button className="px-4 py-2 text-white rounded-md bg-black hover:text-yellow-500 hover:cursor-pointer"
+                aria-label="PageRight"
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage >= totalPages}>
         <FaIcons.FaArrowRight/>

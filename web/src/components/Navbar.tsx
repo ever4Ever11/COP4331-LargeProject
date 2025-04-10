@@ -4,7 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 
 const Navbar = () => {
   return ( 
-    <div className="px-20 flex justify-between items-center border-b-8 border-cyan-700"> 
+    <div className="px-20 flex justify-between items-center border-8 border-cyan-700"> 
       <div><img src={Logo} alt="" className="w-[100px]" />
 	    <p className='text-cyan-700 font-semibold italic'>wayfinder</p>
 	    </div>
