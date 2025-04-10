@@ -151,7 +151,7 @@ const Login: React.FunctionComponent = () => {
 					</button>
 				</form>
 				<p className="text-sl mb-5 text-center text-gray-800">
-					not have an account yet? <a className="hover:text-cyan-700 hover:underline hover:decoration-cyan-700" href="/signup">→Signup</a>
+					do not have an account yet? <a className="hover:text-cyan-700 hover:underline hover:decoration-cyan-700" href="/signup">→Signup</a>
 				</p>
 			</div>
 			<div className="flex justify-center items-center">

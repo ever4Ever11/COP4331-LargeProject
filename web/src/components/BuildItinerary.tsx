@@ -97,11 +97,11 @@ const BuildItinerary: React.FunctionComponent = () => {
   if (generatedItinerary) {
     return (
       <>
-        <div className="container mt-10 py-5 max-w-3xl border-4 border-cyan-700 py-14 max-w-5xl mx-auto bg-cover">
+        <div className="container mt-20 py-5 max-w-3xl border-4 border-cyan-700 py-14 max-w-5xl mx-auto">
         <Itinerary {...generatedItinerary} />
         <div className="flex space-x-4 items-center justify-center mt-5">
-        <button type="button" className="bg-black text-white px-4 py-2 rounded hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={() => {setGeneratedItinerary(null); setSaved(false);}}>Try Again</button>
-        <button type="button" className="bg-black text-white px-4 py-2 rounded hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={saveItinerary} disabled={saved}>Save</button>
+        <button type="button" className="bg-black text-white px-4 py-2 rounded hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={() => {setGeneratedItinerary(null); setSaved(false);}}>Try Again</button>
+        <button type="button" className="bg-black text-white px-4 py-2 rounded hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50" onClick={saveItinerary} disabled={saved}>Save</button>
         </div>
         </div>
       </>
@@ -205,7 +205,7 @@ const BuildItinerary: React.FunctionComponent = () => {
   </div>
 
   <div className="flex justify-center py-5">
-    <button type="submit" className="w-64 h-12 p-4 text-lg rounded-lg border-gray-300 bg-black text-white flex items-center justify-center space-x-2 hover:border-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50">
+    <button type="submit" className="w-64 h-12 p-4 text-lg rounded-lg border-gray-300 bg-black text-white flex items-center justify-center space-x-2 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-opacity-50">
     <FaIcons.FaPlane />
     <span>let's go</span>
     </button>

@@ -108,7 +108,7 @@ const Bookmarks: React.FunctionComponent = () => {
   }; 
 
   return (
-    <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-lg">
+    <div className="container py-14 mt-20 max-w-5xl mx-auto bg-cyan-700 rounded-lg">
       <dialog className="max-w-4xl border-4 border-cyan-700 py-5 px-8 mx-auto" ref={selectedItineraryDialogRef}>
         {selectedItinerary && <Itinerary {...selectedItinerary} />}
         <div className="flex justify-center">

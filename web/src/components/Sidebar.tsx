@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import Logo from "../assets/logo.webp";
 import { motion } from "framer-motion"
 import { slideUp, slideBottom  } from "../utility/animation"
+import DefaultImage from "../assets/upload.png"
 
 
 const Navbar = styled.div`
@@ -130,8 +131,12 @@ const Sidebar: React.FunctionComponent = () => {
             animate="animate"
             className="bg-white rounded-lg font-bold text-2xl text-right"
             >
-            <p className='italic'>
+            <p className="italic flex gap-x-2 float-right" >
             Welcome, {firstName} {lastName} !
+            <img 
+            src={DefaultImage}
+            alt="Avatar"
+            className="w-24 h-24 rounded-full border-2 border-black"/> 
             </p>           
             </motion.div>
 

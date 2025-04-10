@@ -141,18 +141,6 @@ const Signup: React.FunctionComponent = () => {
               {icon}
             </span>
           </div>
-          <div className="mb-4">
-            <input
-              type="checkbox"
-              id="Checkbox"
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
-              required
-            />
-            <label className="px-3 py-2 text-gray-700 text-sm font-bold mb-2" htmlFor="Checkbox">
-              I agree to the terms and conditions <br />
-              as set out by the user agreement.<br />
-            </label>
-          </div>
           <button
             type="submit"
             className="w-full bg-cyan-700 text-white py-2 px-4 rounded-lg hover:bg-cyan-700 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:ring-opacity-50"
@@ -161,7 +149,7 @@ const Signup: React.FunctionComponent = () => {
           </button>
         </form>
         <p className="text-sl mb-5 text-center text-gray-800">
-          already had an account? <a className="hover:text-cyan-700 hover:underline hover:decoration-cyan-7000" href="/login">→Login</a>
+          already have an account? <a className="hover:text-cyan-700 hover:underline hover:decoration-cyan-7000" href="/login">→Login</a>
         </p>
       </div>
     </div>

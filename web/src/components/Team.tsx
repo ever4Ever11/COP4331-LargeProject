@@ -19,7 +19,7 @@ const sampleData: Data[] = [
   
 const Team: React.FunctionComponent = () => {
     return (
-      <div className="container py-14 mt-10 max-w-5xl mx-auto bg-cyan-700 rounded-xl">
+      <div className="container py-14 mt-20 max-w-5xl mx-auto bg-cyan-700 rounded-xl">
         <div className="grid grid-cols-3 gap-6 justify-items-center rounded-lg bg-white">
           {sampleData.map((row) => (
           <div
