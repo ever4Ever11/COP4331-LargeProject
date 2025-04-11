@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'path.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'login_screen.dart'; // ✅ Import LoginScreen
+import 'login_screen.dart'; 
 import 'search_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -92,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               // Navigate to LoginScreen instead of SearchScreen after successful registration
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => LoginScreen(), // ✅ Navigate to LoginScreen
+                                  builder: (BuildContext context) => LoginScreen(), // Navigate to LoginScreen
                                 ),
                                 (Route route) => false,
                               );
