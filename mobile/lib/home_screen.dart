@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wayfinder/profile_screen.dart';
 import 'package:wayfinder/main_scaffold.dart';
 
@@ -20,13 +21,24 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/images/place4.jpg',
   ];
 
+  String? _profileIconPath;
+  double _profileIconScale = 1.0; // Variable to control the scale of the icon
+
   @override
   void initState() {
     super.initState();
+    _loadProfileIcon();
     Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % _imagePaths.length;
       });
+    });
+  }
+
+  Future<void> _loadProfileIcon() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileIconPath = prefs.getString('selectedProfileIcon');
     });
   }
 
@@ -105,16 +117,42 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProfileScreen(user: user)),
-                );
+                    builder: (context) => ProfileScreen(user: user),
+                  ),
+                ).then((_) => _loadProfileIcon());
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black.withOpacity(0.05),
+              onTapDown: (_) {
+                // On tap, scale up the icon slightly
+                setState(() {
+                  _profileIconScale = 1.2; // Scale up to 1.2x size
+                });
+              },
+              onTapUp: (_) {
+                // After tap, scale back to original size
+                setState(() {
+                  _profileIconScale = 1.0; // Reset scale to 1x
+                });
+              },
+              onTapCancel: () {
+                // If the tap is cancelled, reset the scale
+                setState(() {
+                  _profileIconScale = 1.0;
+                });
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+                transform: Matrix4.identity()..scale(_profileIconScale),
+                child: CircleAvatar(
+                  radius: 28,
+                  backgroundImage: _profileIconPath != null
+                      ? AssetImage(_profileIconPath!)
+                      : null,
+                  backgroundColor: Colors.grey[200],
+                  child: _profileIconPath == null
+                      ? const Icon(Icons.person, size: 28, color: Colors.black87)
+                      : null,
                 ),
-                padding: const EdgeInsets.all(8),
-                child: const Icon(Icons.person, size: 28, color: Colors.black87),
               ),
             ),
           ),
@@ -123,26 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
