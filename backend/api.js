@@ -1,10 +1,39 @@
 require('express');
 require('mongodb');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const crypto = require('crypto');
 const
 {
   sendEmailWithSwaks
 } = require('./mailgunMailer');
+
+const app = express();
+const PORT = 5000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+const itinerary = require('./itinerary.js');
+
+app.post('/api/get-itinerary', async (req, res) => {
+    try {
+        const ret = await itinerary.getItinerary(req.body);
+
+        if (ret.error) {
+            return res.status(401).json({ error: ret.error });
+        }
+
+        res.status(200).json(ret);
+    } catch (e) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(Server running at http://localhost:${PORT});
+}); 
+
 
 exports.setApp = function(app, client)
 {
