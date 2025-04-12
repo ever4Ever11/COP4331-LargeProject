@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool _loginEnabled = true;
   String _loginResult = '';
+  String? _accessToken;
   Map<String, dynamic>? _user;
 
   @override
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => HomeScreen(user: _user!),
+                                  builder: (BuildContext context) => HomeScreen(accessToken: _accessToken!, user: _user!),
                                 ),
                                 (Route route) => false,
                               );
@@ -135,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     setState(() {
+      _accessToken = body['accessToken'];
       _user = JWT.decode(body['accessToken']!).payload as Map<String, dynamic>;
     });
   }

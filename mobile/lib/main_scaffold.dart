@@ -6,12 +6,14 @@ import 'package:wayfinder/bookmarks_screen.dart';
 class MainScaffold extends StatelessWidget {
   final int selectedIndex;
   final Widget child;
+  final String accessToken;
   final Map<String, dynamic> user;
 
   const MainScaffold({
     super.key,
     required this.selectedIndex,
     required this.child,
+    required this.accessToken,
     required this.user,
   });
 
@@ -21,13 +23,13 @@ class MainScaffold extends StatelessWidget {
     Widget screen;
     switch (index) {
       case 0:
-        screen = SearchScreen(user: user);
+        screen = SearchScreen(accessToken: accessToken, user: user);
         break;
       case 1:
-        screen = HomeScreen(user: user);
+        screen = HomeScreen(accessToken: accessToken, user: user);
         break;
       case 2:
-        screen = BookmarksScreen(user: user);
+        screen = BookmarksScreen(accessToken: accessToken, user: user);
         break;
       default:
         return;

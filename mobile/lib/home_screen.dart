@@ -5,8 +5,9 @@ import 'package:wayfinder/profile_screen.dart';
 import 'package:wayfinder/main_scaffold.dart';
 
 class HomeScreen extends StatefulWidget {
+  final String accessToken;
   final Map<String, dynamic> user;
-  const HomeScreen({super.key, required this.user});
+  const HomeScreen({super.key, required this.accessToken, required this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -45,10 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final accessToken = widget.accessToken;
     final user = widget.user;
 
     return MainScaffold(
       selectedIndex: 1,
+      accessToken: accessToken,
       user: user,
       child: Stack(
         children: [
@@ -118,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfileScreen(user: user),
+                    builder: (context) => ProfileScreen(accessToken: accessToken, user: user),
                   ),
                 ).then((_) => _loadProfileIcon());
               },

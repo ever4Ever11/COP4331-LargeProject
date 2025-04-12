@@ -9,8 +9,9 @@ import 'package:wayfinder/main_scaffold.dart';
 import 'package:wayfinder/path.dart';
 
 class SearchScreen extends StatefulWidget {
+  final String accessToken;
   final Map<String, dynamic> user;
-  const SearchScreen({super.key, required this.user});
+  const SearchScreen({super.key, required this.accessToken, required this.user});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -45,6 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return MainScaffold(
       selectedIndex: 0,
+      accessToken: widget.accessToken,
       user: widget.user,
       child: Center(
         child: Padding(
@@ -214,30 +216,34 @@ class _SearchScreenState extends State<SearchScreen> {
                   ElevatedButton(
                     onPressed: _generateEnabled
                         ? () {
-                          setState(() => _generateEnabled = false);
-                          _generate(
+                          setState(() {_generateEnabled = false;});
+                          _generate(widget.accessToken,
                             location: locationController.text,
                             startDate: DateFormat.yMd().parse(startDateController.text),
                             endDate: DateFormat.yMd().parse(endDateController.text),
                             budget: budgetController.text,
                             interests: interestsController.getTags ?? [],
                             travelStyle: travelStyleController.text,
-                          );
-                          if (_itinerary == null) {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                content: Text(_generationResult)
-                              ),
-                            );
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => Dialog(
-                                child: Text(_itinerary!),
-                              ),
-                            );
-                          }
+                          ).then((void _) {
+                            if (context.mounted) {
+                              if (_itinerary == null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    content: Text(_generationResult)
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => Dialog(
+                                    child: Text(_itinerary!),
+                                  ),
+                                );
+                              }
+                            }
+                            setState(() {_generateEnabled = true;});
+                          });
                         }
                         : null,
                     child: const Text('Generate Itinerary'),
@@ -268,7 +274,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  Future<void> _generate({
+  Future<void> _generate(String accessToken, {
     required String location,
     required DateTime startDate,
     required DateTime endDate,
@@ -276,10 +282,8 @@ class _SearchScreenState extends State<SearchScreen> {
     required List<String> interests,
     String? travelStyle
   }) async {
-    String interestsString = '';
-    for (String interest in interests) {
-      interestsString += interest;
-    }
+    String interestsString = interests.toString();
+    interestsString = interestsString.substring(1, interestsString.length - 1);
 
     final response = await http.post(
       await path('api/get-itinerary'),
@@ -287,9 +291,9 @@ class _SearchScreenState extends State<SearchScreen> {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
+        'token': accessToken,
         'location': location,
-        'startDate': startDate.toString(),
-        'endDate': endDate.toString(),
+        'duration': endDate.difference(startDate).inDays,
         'budget': budget,
         'interests': interestsString,
         'travelStyle': travelStyle ?? '',
@@ -297,19 +301,22 @@ class _SearchScreenState extends State<SearchScreen> {
     );
 
     if (response.statusCode != 200) {
-      setState(() => 'Generation failed: Status code ${response.statusCode}.');
+      setState(() {
+        _generationResult = 'Generation failed: (${response.statusCode}) ${jsonDecode(response.body)['error']}.';
+      });
       return;
     }
 
-    final body = jsonDecode(response.body) as String;
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
 
-    if (body.indexOf('Error') == 0) {
-      setState(() => 'Generation failed: $body');
+    if (body['error'] != null) {
+      setState(() {_generationResult = 'Generation failed: ${body['error']}.';});
       return;
     }
 
     setState(() {
-      _itinerary = _generationResult = body;
+      _itinerary = body['itinerary'];
+      _generationResult = 'Generation successful.';
     });
   }
 

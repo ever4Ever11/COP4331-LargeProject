@@ -5,9 +5,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'login_screen.dart'; 
 
 class ProfileScreen extends StatefulWidget {
+  final String accessToken;
   final Map<String, dynamic> user;
 
-  const ProfileScreen({super.key, required this.user});
+  const ProfileScreen({super.key, required this.accessToken, required this.user});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
