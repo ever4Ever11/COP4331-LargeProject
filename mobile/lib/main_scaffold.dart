@@ -33,7 +33,7 @@ class MainScaffold extends StatelessWidget {
         return;
     }
 
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => screen),
     );
@@ -42,6 +42,7 @@ class MainScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(child: child),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,

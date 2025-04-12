@@ -5,9 +5,11 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 import 'path.dart';
 import 'register_screen.dart';
-import 'home_screen.dart'; // I Updated this to HomeScreen I changed the names so that now the user gets sent to Home_screen and can go to a search_screen from there
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -74,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => HomeScreen(user: _user!), // ✅ Fixed
+                                  builder: (BuildContext context) => HomeScreen(user: _user!),
                                 ),
                                 (Route route) => false,
                               );

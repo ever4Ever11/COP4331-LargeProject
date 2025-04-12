@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'login_screen.dart';
 
 void main() {
@@ -14,19 +13,13 @@ class WayFinderApp extends StatelessWidget {
       title: 'Way Finder',
       theme: ThemeData(
         colorScheme: ColorScheme.light(),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: TextStyle(
+            color: Colors.grey.shade600,
+          )
+        )
       ),
-      home: HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return LoginScreen();
-      }
+      home: LoginScreen(),
     );
   }
 }

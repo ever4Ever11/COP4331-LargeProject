@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'path.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'login_screen.dart'; 
-import 'search_screen.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
