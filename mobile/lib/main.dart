@@ -13,6 +13,11 @@ class WayFinderApp extends StatelessWidget {
       title: 'Way Finder',
       theme: ThemeData(
         colorScheme: ColorScheme.light(),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: TextStyle(
+            color: Colors.grey.shade600,
+          )
+        )
       ),
       home: LoginScreen(),
     );
