@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart'; // Ensure this import is included
 
 import 'path.dart';
 import 'register_screen.dart';
@@ -21,6 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String _loginResult = '';
   String? _accessToken;
   Map<String, dynamic>? _user;
+
+  // For password reset
+  final resetEmailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   child: const Text("Don't have an account?"),
-                )
+                ),
+                const SizedBox(height: 15.0),
+                TextButton(
+                  onPressed: () {
+                    _showPasswordResetDialog();
+                  },
+                  child: const Text("Forgot password?"),
+                ),
               ],
             ),
           ),
@@ -126,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final body = jsonDecode(response.body) as Map<String, dynamic>;
 
     if (body['error'] != null) {
-      setState(() => _loginResult = 'Login failed: ${body['error']}.');
+      setState(() => _loginResult = 'Login failed: ${body['error']}');
       return;
     }
 
@@ -137,14 +147,98 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() {
       _accessToken = body['accessToken'];
-      _user = JWT.decode(body['accessToken']!).payload as Map<String, dynamic>;
+
+      try {
+        // Verify and decode the JWT using the verify method
+        final jwt = JWT.verify(body['accessToken'], SecretKey('your_secret_key')); // Replace with actual secret key
+        _user = jwt.payload as Map<String, dynamic>;
+      } catch (e) {
+        setState(() => _loginResult = 'Invalid token: $e');
+      }
     });
+  }
+
+  // Password reset function
+  Future<void> _requestPasswordReset(String email) async {
+    try {
+      final response = await http.post(
+        await path('api/request-password-reset'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({'email': email}),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (data['error'] != null) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(data['error']),
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: const Text('Check your email for a reset link.'),
+            );
+          },
+        );
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text('Error: $e'),
+          );
+        },
+      );
+    }
+  }
+
+  // Show the password reset dialog
+  void _showPasswordResetDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Reset Password"),
+          content: TextField(
+            controller: resetEmailController,
+            decoration: const InputDecoration(hintText: "Enter your email"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("Submit"),
+              onPressed: () {
+                final email = resetEmailController.text;
+                _requestPasswordReset(email);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    resetEmailController.dispose();
     super.dispose();
   }
 }
