@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:wayfinder/main_scaffold.dart';
+import 'package:wayfinder/itinerary_screen.dart';
 import 'package:wayfinder/path.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: 100.0,
                     child: const Image(image: AssetImage('assets/images/logo.png')),
                   ), // Logo
-                  const SizedBox(height: 25.0), // Spacer
+                  const SizedBox(height: 15.0), // Spacer
                   TextFormField(
                     controller: locationController,
                     decoration: const InputDecoration(
@@ -212,8 +213,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                   ), // Interests Tags
-                  const SizedBox(height: 25.0), // Spacer
-                  ElevatedButton(
+                  const SizedBox(height: 15.0), // Spacer
+                  ElevatedButton.icon(
                     onPressed: _generateEnabled
                         ? () {
                           setState(() {_generateEnabled = false;});
@@ -230,14 +231,23 @@ class _SearchScreenState extends State<SearchScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) => AlertDialog(
-                                    content: Text(_generationResult)
+                                    content: Text(_generationResult),
                                   ),
                                 );
                               } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => Dialog(
-                                    child: Text(_itinerary!),
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => ItineraryScreen(
+                                      accessToken: widget.accessToken,
+                                      user: widget.user,
+                                      itinerary: _itinerary!,
+                                      location: locationController.text,
+                                      startDate: DateFormat.yMd().parse(startDateController.text),
+                                      endDate: DateFormat.yMd().parse(endDateController.text),
+                                      budget: budgetController.text,
+                                      interests: interestsController.getTags ?? [],
+                                      travelStyle: travelStyleController.text,
+                                    ),
                                   ),
                                 );
                               }
@@ -246,7 +256,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           });
                         }
                         : null,
-                    child: const Text('Generate Itinerary'),
+                    icon: _generateEnabled
+                        ? null
+                        : CircularProgressIndicator(
+                          constraints: BoxConstraints.tight(Size.square(theme.iconTheme.size ?? 16.0)),
+                          color: theme.disabledColor,
+                        ),
+                    label: _generateEnabled
+                        ? const Text('Generate Itinerary')
+                        : const Text('Generating...'),
                   )
                 ],
               ),
