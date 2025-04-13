@@ -1,6 +1,7 @@
 interface ItineraryOptions {
   [key: string]: string|number;
   location: string;
+  startDate: string;
   duration: number;
   budget: string;
   interests: string;

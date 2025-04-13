@@ -3,6 +3,7 @@ import { ItineraryOptions, ItineraryProps } from "../types/Itinerary";
 function newItineraryOptions(): ItineraryOptions {
   return {
     location: 'any',
+    startDate: 'any',
     duration: 1,
     budget: 'any',
     interests: 'everything',

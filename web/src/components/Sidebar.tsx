@@ -128,6 +128,7 @@ const Sidebar: React.FunctionComponent = () => {
 
     const doLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
+      localStorage.removeItem("token");
       localStorage.removeItem("user_data");
       window.location.href = '/';
     };    

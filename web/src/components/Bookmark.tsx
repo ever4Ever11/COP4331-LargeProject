@@ -46,7 +46,6 @@ const Bookmarks: React.FunctionComponent = () => {
   }
 
   const deleteItinerary = (created: string) => {
-    // API call?
 
     console.log(`Deleted: ${created}`);
     let storedItineraries = [];
@@ -146,6 +145,7 @@ const Bookmarks: React.FunctionComponent = () => {
             <div className="text-xl font-semibold text-gray-700">
               <div>🗓️ Created: {new Date(element.created).toDateString()}</div>
               <div>🌆 Destination: {element.parameters.location}</div>
+              <div>🗓️ Start Date: {element.parameters.startDate}</div>
               <div>⏳ Duration: {element.parameters.duration}</div>
               <div>💰 Budget: {element.parameters.budget}</div>
               <div>🤔 Interests: {element.parameters.interests}</div>

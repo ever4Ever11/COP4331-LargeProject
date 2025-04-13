@@ -19,8 +19,6 @@ const BuildItinerary: React.FunctionComponent = () => {
   const [currentSuggestionLists, setCurrentSuggestionLists] = React.useState<SuggestionLists>();
 
   React.useEffect(() => {
-    // Get suggestion lists from API?
-
     const byRelevance = (a: Suggestion, b: Suggestion) => b.relevance - a.relevance;
     suggestionListNames.map((name) => SuggestionListsData[name].sort(byRelevance));
 
@@ -48,24 +46,27 @@ const BuildItinerary: React.FunctionComponent = () => {
     event.preventDefault();
 
     try {
-      /*
-      const response = await fetch(buildPath('api/itinerary'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(itineraryOptions)
-      });
-      const data = await response.json();
-
-      if (data.error) {
-        alert(data.error);
-        return;
-      }
-      */
-
-      alert("Generated itinerary is fake!");
 
       const created = new Date().toISOString();
+
+      alert("Generated itinerary is fake!");
       const content = FakeItinerariesData[Math.floor(Math.random()*FakeItinerariesData.length)];
+
+      //const token = localStorage.getItem('token');
+
+      //const response = await fetch(buildPath('api/get-itinerary'), {
+      //  method: 'POST',
+      //  headers: { 'Content-Type': 'application/json' },
+      //  body: JSON.stringify({...itineraryOptions, token: token})
+      //});
+      //const data = await response.json();
+
+      //if (data.error) {
+      //  alert(data.error);
+      //  return;
+      //}
+
+      //const content = data.itinerary;
 
       console.log('Building itinerary ....');
       console.log(created);
@@ -73,7 +74,6 @@ const BuildItinerary: React.FunctionComponent = () => {
       console.log(content);
 
       setGeneratedItinerary(newItinerary(created, itineraryOptions, content));
-      //setGeneratedItinerary(newItinerary(created, itineraryOptions, data.content));
 
     } catch (err: unknown) {
       alert("Error sending reset request: " + err?.toString());
@@ -81,8 +81,6 @@ const BuildItinerary: React.FunctionComponent = () => {
   };
 
   const saveItinerary = () => {
-    // API call?
-
     let storedItineraries = [];
     const unparsed = localStorage.getItem('itineraries');
     if (unparsed) {
@@ -148,6 +146,17 @@ const BuildItinerary: React.FunctionComponent = () => {
     list="locationSuggestions"
     placeholder="London, Tokyo, Vancouver,..."
     className="w-60 h-10 p-4 text-sm border border-gray-300 rounded-lg" 
+    onChange={handleInput}
+    />
+  </div>
+
+  <div className="flex items-center justify-center gap-4 py-2 border-b-2">
+    <FaIcons.FaCalendarTimes className="text-white text-xl" />
+    <label htmlFor="startDate" className="text-xl font-semibold text-white">Enter start date:</label>
+    <input
+    id="startDate"
+    type="date"
+    className="w-60 h-10 p-4 text-sm border-2 border-gray-300 rounded-lg"
     onChange={handleInput}
     />
   </div>

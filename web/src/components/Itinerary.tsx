@@ -33,6 +33,7 @@ const Itinerary: React.FunctionComponent<ItineraryProps> = ({created, parameters
     <div className="text-left">
       <p><span className="font-semibold text-white py-2">🗓️ Created:</span><span className="px-2 font-semibold text-white">{formatedDate}</span></p>
       <p><span className="font-semibold text-white py-2">🌆 Destination:</span ><span className="px-2 font-semibold text-white">{parameters.location}</span></p>
+      <p><span className="font-semibold text-white py-2">🗓️ Start Date:</span><span className="px-2 font-semibold text-white">{parameters.startDate}</span></p>
       <p><span className="font-semibold text-white py-2">⏳ Duration:</span><span className="px-2 font-semibold text-white">{parameters.duration}</span></p>
       <p><span className="font-semibold text-white py-2">💰 Budget:</span><span className="px-2 font-semibold text-white">{parameters.budget}</span></p>
       <p><span className="font-semibold text-white py-2">🤔 Interests:</span><span className="px-2 font-semibold text-white">{parameters.interests}</span></p>

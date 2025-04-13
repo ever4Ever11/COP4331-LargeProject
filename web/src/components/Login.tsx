@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import * as FaIcons from 'react-icons/fa';
 
 interface DecodedToken {
-	id: number;
+	userId: number;
 	firstName: string;
 	lastName: string;
 }
@@ -70,13 +70,13 @@ const Login: React.FunctionComponent = () => {
 			console.log("Decoded JWT:", decoded);
 
 			const user = {
-				ud: decoded,
-				firstName: decoded?.firstName ?? res?.firstName ?? '',
-				lastName: decoded?.lastName ?? res?.lastName ?? '',
+				firstName: decoded?.firstName ?? '',
+				lastName: decoded?.lastName ?? '',
 				avatar: 0,
-				id: decoded?.id ?? res?.id
+				id: decoded?.userId
 			};
 
+			localStorage.setItem('token', accessToken);
 			localStorage.setItem('user_data', JSON.stringify(user));
 			window.location.href = '/build-itinerary';
 		} catch (error: unknown) {
