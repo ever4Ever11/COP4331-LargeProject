@@ -47,6 +47,7 @@ dependencies:
   dart_jsonwebtoken: ^3.2.0
   intl: ^0.20.2
   textfield_tags: ^3.0.1
+  flutter_markdown: ^0.7.7
 
 dev_dependencies:
   flutter_test:
