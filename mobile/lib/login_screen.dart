@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart'; // Ensure this import is included
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 import 'path.dart';
 import 'register_screen.dart';
@@ -17,13 +17,68 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final forgotPasswordEmailController = TextEditingController();
+
   bool _loginEnabled = true;
   String _loginResult = '';
   String? _accessToken;
   Map<String, dynamic>? _user;
 
-  // For password reset
-  final resetEmailController = TextEditingController();
+  void _showForgotPasswordDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Reset Password"),
+          content: TextField(
+            controller: forgotPasswordEmailController,
+            decoration: const InputDecoration(
+              hintText: 'Enter your email',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                _sendPasswordReset(forgotPasswordEmailController.text);
+                Navigator.pop(context);
+              },
+              child: const Text("Send Reset Link"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _sendPasswordReset(String email) async {
+    try {
+      final response = await http.post(
+        await path('api/request-password-reset'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email}),
+      );
+
+      final data = jsonDecode(response.body);
+      if (data['error'] != null) {
+        _showAlert(data['error']);
+      } else {
+        _showAlert('Check your email for a reset link.');
+      }
+    } catch (err) {
+      _showAlert('Error sending reset request: $err');
+    }
+  }
+
+  void _showAlert(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(content: Text(message)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,28 +120,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _loginEnabled ? () {
                     setState(() => _loginEnabled = false);
                     _login(emailController.text, passwordController.text)
-                        .then((void _) {
-                          setState(() => _loginEnabled = true);
-                          if (context.mounted) {
-                            if (_user == null) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    content: Text(_loginResult),
-                                  );
-                                }
-                              );
-                            } else {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) => HomeScreen(accessToken: _accessToken!, user: _user!),
-                                ),
-                                (Route route) => false,
-                              );
-                            }
-                          }
-                        });
+                        .then((_) {
+                      setState(() => _loginEnabled = true);
+                      if (context.mounted) {
+                        if (_user == null) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content: Text(_loginResult),
+                            ),
+                          );
+                        } else {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HomeScreen(accessToken: _accessToken!, user: _user!),
+                            ),
+                            (Route route) => false,
+                          );
+                        }
+                      }
+                    });
                   } : null,
                   child: const Text('Log In'),
                 ),
@@ -95,18 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context) => RegisterScreen(),
+                        builder: (context) => RegisterScreen(),
                       ),
                     );
                   },
                   child: const Text("Don't have an account?"),
                 ),
-                const SizedBox(height: 15.0),
                 TextButton(
-                  onPressed: () {
-                    _showPasswordResetDialog();
-                  },
-                  child: const Text("Forgot password?"),
+                  onPressed: _showForgotPasswordDialog,
+                  child: const Text('Forgot Password?'),
                 ),
               ],
             ),
@@ -119,9 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _login(String email, String password) async {
     final response = await http.post(
       await path('api/login'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'login': email,
         'password': password,
@@ -133,112 +182,35 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-
+    final body = jsonDecode(response.body);
     if (body['error'] != null) {
       setState(() => _loginResult = 'Login failed: ${body['error']}');
       return;
     }
 
     if (body['accessToken'] == null) {
-      setState(() => _loginResult = 'Login failed: No access token received from server.');
+      setState(() => _loginResult = 'Login failed: No access token received.');
       return;
     }
 
-    setState(() {
-      _accessToken = body['accessToken'];
-
-      try {
-        // Verify and decode the JWT using the verify method
-        final jwt = JWT.verify(body['accessToken'], SecretKey('your_secret_key')); // Replace with actual secret key
-        _user = jwt.payload as Map<String, dynamic>;
-      } catch (e) {
-        setState(() => _loginResult = 'Invalid token: $e');
-      }
-    });
-  }
-
-  // Password reset function
-  Future<void> _requestPasswordReset(String email) async {
     try {
-      final response = await http.post(
-        await path('api/request-password-reset'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({'email': email}),
-      );
-
-      final data = jsonDecode(response.body);
-
-      if (data['error'] != null) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(data['error']),
-            );
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: const Text('Check your email for a reset link.'),
-            );
-          },
-        );
-      }
+      final jwt = JWT.decode(body['accessToken']);
+      setState(() {
+        _accessToken = body['accessToken'];
+        _user = jwt.payload as Map<String, dynamic>;
+      });
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text('Error: $e'),
-          );
-        },
-      );
+      setState(() => _loginResult = 'Invalid token: $e');
     }
-  }
-
-  // Show the password reset dialog
-  void _showPasswordResetDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Reset Password"),
-          content: TextField(
-            controller: resetEmailController,
-            decoration: const InputDecoration(hintText: "Enter your email"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text("Submit"),
-              onPressed: () {
-                final email = resetEmailController.text;
-                _requestPasswordReset(email);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    resetEmailController.dispose();
+    forgotPasswordEmailController.dispose();
     super.dispose();
   }
 }
+
+
