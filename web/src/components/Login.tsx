@@ -71,9 +71,9 @@ const Login: React.FunctionComponent = () => {
 
 			const user = {
 				ud: decoded,
-				email: 'Unavailable',
 				firstName: decoded?.firstName ?? res?.firstName ?? '',
 				lastName: decoded?.lastName ?? res?.lastName ?? '',
+				avatar: 0,
 				id: decoded?.id ?? res?.id
 			};
 

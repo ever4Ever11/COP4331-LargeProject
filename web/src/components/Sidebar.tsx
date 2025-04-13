@@ -8,6 +8,15 @@ import Logo from "../assets/logo.webp";
 import { motion } from "framer-motion"
 import { slideUp, slideBottom  } from "../utility/animation"
 import DefaultImage from "../assets/upload.png"
+import Profile1 from "../assets/profile/profile1.webp"
+import Profile2 from "../assets/profile/profile2.webp"
+import Profile3 from "../assets/profile/profile3.webp"
+import Profile4 from "../assets/profile/profile4.webp"
+import Profile5 from "../assets/profile/profile5.webp"
+import Profile6 from "../assets/profile/profile6.webp"
+import Profile7 from "../assets/profile/profile7.webp"
+import Profile8 from "../assets/profile/profile8.webp"
+import Profile9 from "../assets/profile/profile9.webp"
 
 
 const Navbar = styled.div`
@@ -81,18 +90,41 @@ interface UserData {
   id: string;
   firstName: string;
   lastName: string;
+  avatar: number;
 }
 
 const Sidebar: React.FunctionComponent = () => {
     const [close, setClose] = useState(false)
     const showSidebar = () => setClose(!close)
+
     const _ud = localStorage.getItem('user_data');
     if (!_ud) {
       // Handle case where user data isn't found (optional)
       return null; // or redirect to login
     }
     const ud = JSON.parse(_ud) as UserData;
-    const { firstName, lastName } = ud;
+    let { firstName, lastName, avatar } = ud;
+
+    const data = localStorage.getItem('persisted');
+    if (data != null) {
+      const user: UserData = JSON.parse(data);
+      firstName = user.firstName;
+      lastName = user.lastName;
+      avatar = user.avatar;
+    }
+
+    let imageSrc = DefaultImage;
+    switch (avatar) {
+        case 1: imageSrc = Profile1; break;
+        case 2: imageSrc = Profile2; break;
+        case 3: imageSrc = Profile3; break;
+        case 4: imageSrc = Profile4; break;
+        case 5: imageSrc = Profile5; break;
+        case 6: imageSrc = Profile6; break;
+        case 7: imageSrc = Profile7; break;
+        case 8: imageSrc = Profile8; break;
+        case 9: imageSrc = Profile9; break;
+    }
 
     const doLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
@@ -134,7 +166,7 @@ const Sidebar: React.FunctionComponent = () => {
             <p className="italic flex gap-x-2 float-right" >
             Welcome, {firstName} {lastName} !
             <img 
-            src={DefaultImage}
+            src={imageSrc}
             alt="Avatar"
             className="w-24 h-24 rounded-full border-2 border-black"/> 
             </p>           
