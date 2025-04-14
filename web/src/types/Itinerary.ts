@@ -1,17 +1,12 @@
-interface ItineraryOptions {
-  [key: string]: string|number;
-  location: string;
-  startDate: string;
-  duration: number;
-  budget: string;
-  interests: string;
-  travelStyle: string;
-}
-
-interface ItineraryProps {
+export interface ItineraryProps {
   created: string;
-  parameters: ItineraryOptions;
-  content: string;
+  parameters: {
+    location: string;
+    startDate: string;
+    duration: number | string;
+    budget: string;
+    interests: string;
+    travelStyle: string;
+  };
+  itineraryContent: string; 
 }
-
-export { type ItineraryOptions, type ItineraryProps };

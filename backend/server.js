@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path'); // <-- add this
+const path = require('path');
 
 const PORT = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
@@ -14,13 +14,18 @@ const MongoClient = require('mongodb').MongoClient;
 const url = process.env.MONGODB_URI;
 const client = new MongoClient(url);
 
-client.connect(() => console.log('Connected to MongoDB'));
+client.connect((err) => {
+  if (err) {
+    console.error("Error connecting to MongoDB:", err);
+    process.exit(1);
+  }
+  console.log('Connected to MongoDB');
+});
 
 const api = require('./api.js');
 api.setApp(app, client);
 
-app.use((req, res, next) =>
-{
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -30,11 +35,13 @@ app.use((req, res, next) =>
   next();
 });
 
+//for global server use
 app.use(express.static('/var/www/html'));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join('/var/www/html', 'index.html'));
 });
+//--------------------------------------------
 
 
 //-------------------------------------------
@@ -45,6 +52,8 @@ app.get('*', (req, res) => {
 // {
 //   res.sendFile(path.join(__dirname, '../web/dist', 'index.html'));
 // });
+//-------------------------------------------
+
 
 app.listen(PORT, () =>
 {
