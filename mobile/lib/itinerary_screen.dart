@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -8,29 +9,14 @@ import 'package:wayfinder/path.dart';
 class ItineraryScreen extends StatefulWidget {
   final String accessToken;
   final Map<String, dynamic> user;
-  String itinerary;
-  int? itineraryId;
+  final Map<String, dynamic> itinerary;
 
-  final String location;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String budget;
-  final List<String> interests;
-  final String travelStyle;
-
-  ItineraryScreen({
+  const ItineraryScreen({
     super.key,
 
     required this.accessToken,
     required this.user,
     required this.itinerary,
-
-    required this.location,
-    required this.startDate,
-    required this.endDate,
-    required this.budget,
-    required this.interests,
-    required this.travelStyle,
   });
 
   @override
@@ -38,10 +24,11 @@ class ItineraryScreen extends StatefulWidget {
 }
 
 class _ItineraryScreenState extends State<ItineraryScreen> {
-  bool _bookmarkEnabled = true;
   bool _regenerateEnabled = true;
-  String _bookmarkResult = '';
-  String? _generationResult = '';
+  bool _deleteEnabled = true;
+  Map<String, dynamic>? _itinerary;
+  String? _generationResult;
+  String? _deletionResult;
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +36,11 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
 
     final String accessToken = widget.accessToken;
     final Map<String, dynamic> user = widget.user;
-    final String itinerary = widget.itinerary;
-    final int? itineraryId = widget.itineraryId;
-
-    final String location = widget.location;
-    final DateTime startDate = widget.startDate;
-    final DateTime endDate = widget.endDate;
-    final String budget = widget.budget;
-    final List<String> interests = widget.interests;
-    final String travelStyle = widget.travelStyle;
-
-    final bool bookmarked = (itineraryId != null) ? true : false;
+    final Map<String, dynamic> itinerary = widget.itinerary;
+  
+    final String createdDate = DateFormat.yMd().add_jm().format(DateTime.parse(itinerary['created']).toLocal());
+    final Map<String, dynamic> parameters = itinerary['parameters'];
+    final String startDate = DateFormat.yMd().format(DateTime.parse(parameters['startDate']));
 
     return Scaffold(
       appBar: AppBar(
@@ -74,29 +55,27 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                 horizontal: 24.0,
                 vertical: 32.0
               ),
-              child: MarkdownBody(
-                data: itinerary
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _infoRow("🗓️ Created", createdDate),
+                  _infoRow("🌆 Destination", parameters['location']),
+                  _infoRow("🗓️ Start Date", startDate),
+                  _infoRow("⏳ Duration", "${parameters['duration'] ?? 'N/A'} days"),
+                  _infoRow("💰 Budget", parameters['budget'] ?? 'N/A'),
+                  _infoRow("🤔 Interests", parameters['interests'] ?? 'N/A'),
+                  _infoRow("🏖️ Travel Style", parameters['travelStyle'] ?? 'N/A'),
+                  const SizedBox(height: 24),
+                  MarkdownBody(
+                    data: itinerary['itineraryContent']
+                  ),
+                ],
               ),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(),
-              TextButton.icon(
-                onPressed: () {}, // _bookmarkEnabled
-                    // ? () {
-                    //   setState(() {_bookmarkEnabled = false;});
-                    //   _toggleBookmark(accessToken, itinerary, itineraryId);
-                    // }
-                    // : null,
-                icon: bookmarked
-                    ? Icon(Icons.bookmark)
-                    : Icon(Icons.bookmark_outline),
-                label: bookmarked
-                    ? Text('Saved')
-                    : Text('Save'),
-              ),
               Spacer(),
               TextButton.icon(
                 style: TextButton.styleFrom(
@@ -106,26 +85,30 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                 onPressed: _regenerateEnabled
                     ? () {
                       setState(() {_regenerateEnabled = false;});
-                      _regenerate(accessToken,
-                        location: location,
-                        startDate: startDate,
-                        endDate: endDate,
-                        budget: budget,
-                        interests: interests,
-                        travelStyle: travelStyle,
-                      ).then((void _) {
-                        if (context.mounted) {
-                          if (_generationResult != null) {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                content: Text(_generationResult!),
-                              ),
-                            );
-                          }
-                        }
-                        setState(() {_regenerateEnabled = true;});
-                      });
+                      _regenerate(accessToken, itinerary,)
+                          .then((void _) {
+                            if (context.mounted) {
+                              if (_generationResult != null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    content: Text(_generationResult!),
+                                  ),
+                                );
+                              } else {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => ItineraryScreen(
+                                      accessToken: accessToken,
+                                      user: user,
+                                      itinerary: _itinerary!,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                            setState(() {_regenerateEnabled = true;});
+                          });
                     }
                     : null,
                 icon: _regenerateEnabled
@@ -139,6 +122,43 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                     : const Text('Regenerating...'),
               ),
               Spacer(),
+              TextButton.icon(
+                style: TextButton.styleFrom(
+                  foregroundColor: theme.buttonTheme.colorScheme?.onError,
+                  backgroundColor: theme.buttonTheme.colorScheme?.error,
+                ),
+                onPressed: _deleteEnabled
+                    ? () {
+                      setState(() {_deleteEnabled = false;});
+                      _deleteItinerary(accessToken, itinerary)
+                          .then((void _) {
+                            if (context.mounted) {
+                              if (_deletionResult != null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    content: Text(_deletionResult!),
+                                  ),
+                                );
+                              } else {
+                                Navigator.of(context).pop();
+                              }
+                            }
+                            setState(() {_deleteEnabled = true;});
+                          });
+                    }
+                    : null,
+                icon: _deleteEnabled
+                    ? const Icon(Icons.delete_outline)
+                    : CircularProgressIndicator(
+                      constraints: BoxConstraints.tight(Size.square(theme.iconTheme.size ?? 16.0)),
+                      color: theme.disabledColor,
+                    ),
+                label: _deleteEnabled
+                    ? const Text('Delete')
+                    : const Text('Deleting...'),
+              ),
+              Spacer(),
             ],
           ),
         ],
@@ -146,74 +166,24 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     );
   }
 
-  Future<void> _toggleBookmark(String accessToken, String itinerary, int? id) async {
-    http.Response response;
-    if (id == null) {
-      response = await http.post(
-        await path('api/save-itinerary'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'token': accessToken,
-          'itinerary': itinerary,
-        }),
-      );
-    } else {
-      response = await http.post(
-        await path('api/delete-itinerary'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {
-          'token': accessToken,
-          'id': id,
-        },
-      );
-    }
-
-    if (response.statusCode != 200) {
-      setState(() {_bookmarkResult = '${(id == null) ? 'Save' : 'Deletion'} failed: (${response.statusCode}) ${jsonDecode(response.body)['error']}.';});
-      return;
-    }
-
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-
-    if (body['error'] != null) {
-      setState(() {_bookmarkResult = '${(id == null) ? 'Save' : 'Deletion'} failed: ${body['error']}.';});
-      return;
-    }
-
-    setState(() {
-      widget.itineraryId = body['id'];
-      _bookmarkResult = '${(id == null) ? 'Save' : 'Deletion'} successful.';
-    });
+  Widget _infoRow(String emoji, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Text(
+        "$emoji: $value",
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      ),
+    );
   }
 
-  Future<void> _regenerate(String accessToken, {
-    required String location,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String budget,
-    required List<String> interests,
-    String? travelStyle
-  }) async {
-    String interestsString = interests.toString();
-    interestsString = interestsString.substring(1, interestsString.length - 1);
-
+  Future<void> _regenerate(String accessToken, Map<String, dynamic> itinerary) async {
     final response = await http.post(
-      await path('api/get-itinerary'),
+      await path('api/itinerary'),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode({
-        'token': accessToken,
-        'location': location,
-        'duration': endDate.difference(startDate).inDays,
-        'budget': budget,
-        'interests': interestsString,
-        'travelStyle': travelStyle ?? '',
-      }),
+      body: jsonEncode(itinerary['parameters']),
     );
 
     if (response.statusCode != 200) {
@@ -231,8 +201,29 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     }
 
     setState(() {
-      widget.itinerary = body['itinerary'];
+      _itinerary = body['itinerary'];
       _generationResult = null;
+    });
+  }
+
+  Future<void> _deleteItinerary(String accessToken, Map<String, dynamic> itinerary) async {
+    final response = await http.delete(
+      await path('api/itinerary/?created=${itinerary['created']}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+    print(response.body);
+    if (response.statusCode != 200) {
+      setState(() {
+        _deletionResult = 'Deletion failed: (${response.statusCode}) ${jsonDecode(response.body)['error']}.';
+      });
+      return;
+    }
+
+    setState(() {
+      _deletionResult == null;
     });
   }
 }

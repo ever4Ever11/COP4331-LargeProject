@@ -27,7 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final travelStyleController = TextEditingController();
   bool _generateEnabled = true;
   String _generationResult = '';
-  String? _itinerary;
+  Map<String, dynamic>? _itinerary;
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +103,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Budget',
-                      hintText: '0.00',
+                      hintText: '0',
                       prefixIcon: Icon(Icons.monetization_on_outlined),
-                      // prefixText: '\$',
+                      prefixText: '\$',
                       // suffix: Expanded(
                       //   child: Text('.00'),
                       // ),
@@ -143,7 +143,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Travel Style',
-                      hintText: '???',
+                      hintText: 'Relaxing, Adventurous, etc.',
                       prefixIcon: Icon(Icons.luggage_outlined),
                     ),
                   ), // Travel Style
@@ -151,7 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   TextFieldTags<String>(
                     textfieldTagsController: interestsController,
                     textSeparators: const [','],
-                    letterCase: LetterCase.capital,
+                    letterCase: LetterCase.normal,
                     validator: (String tag) {
                       if (interestsController.getTags!.contains(tag)) {
                         return 'You\'ve already entered that';
@@ -174,42 +174,45 @@ class _SearchScreenState extends State<SearchScreen> {
                     listenable: interestsController,
                     builder: (BuildContext context, Widget? child) => Align(
                       alignment: Alignment.topLeft,
-                      child: Wrap(
-                        runSpacing: 4.0,
-                        spacing: 4.0,
-                        children: (interestsController.getTags?.map((String tag) => TextButton.icon(
-                          style: ButtonStyle(
-                            minimumSize: WidgetStatePropertyAll(Size(0.0, 0.0)),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            padding: WidgetStatePropertyAll(const EdgeInsets.symmetric(
-                              horizontal: 6.0,
-                              vertical: 4.0,
-                            )),
-                            shape: WidgetStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5.0)
+                      child: Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Wrap(
+                          runSpacing: 4.0,
+                          spacing: 4.0,
+                          children: (interestsController.getTags?.map((String tag) => TextButton.icon(
+                            style: ButtonStyle(
+                              minimumSize: WidgetStatePropertyAll(Size(0.0, 0.0)),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              padding: WidgetStatePropertyAll(const EdgeInsets.symmetric(
+                                horizontal: 6.0,
+                                vertical: 4.0,
+                              )),
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(5.0)
+                                  ),
                                 ),
                               ),
+                              backgroundColor: WidgetStatePropertyAll(theme.colorScheme.primaryContainer),
                             ),
-                            backgroundColor: WidgetStatePropertyAll(theme.colorScheme.primaryContainer),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              interestsController.removeTag(tag);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.cancel, 
-                            color: theme.colorScheme.onPrimaryContainer,
-                          ),
-                          label: Text(
-                            tag,
-                            style: TextStyle(
+                            onPressed: () {
+                              setState(() {
+                                interestsController.removeTag(tag);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.cancel, 
                               color: theme.colorScheme.onPrimaryContainer,
                             ),
-                          ),
-                        )).toList() ?? []),
+                            label: Text(
+                              tag,
+                              style: TextStyle(
+                                color: theme.colorScheme.onPrimaryContainer,
+                              ),
+                            ),
+                          )).toList() ?? []),
+                        ),
                       ),
                     ),
                   ), // Interests Tags
@@ -241,12 +244,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       accessToken: widget.accessToken,
                                       user: widget.user,
                                       itinerary: _itinerary!,
-                                      location: locationController.text,
-                                      startDate: DateFormat.yMd().parse(startDateController.text),
-                                      endDate: DateFormat.yMd().parse(endDateController.text),
-                                      budget: budgetController.text,
-                                      interests: interestsController.getTags ?? [],
-                                      travelStyle: travelStyleController.text,
                                     ),
                                   ),
                                 );
@@ -304,15 +301,16 @@ class _SearchScreenState extends State<SearchScreen> {
     interestsString = interestsString.substring(1, interestsString.length - 1);
 
     final response = await http.post(
-      await path('api/get-itinerary'),
+      await path('api/itinerary'),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
       },
       body: jsonEncode({
-        'token': accessToken,
         'location': location,
+        'startDate': startDate.toString(),
         'duration': endDate.difference(startDate).inDays,
-        'budget': budget,
+        'budget': '\$$budget',
         'interests': interestsString,
         'travelStyle': travelStyle ?? '',
       }),

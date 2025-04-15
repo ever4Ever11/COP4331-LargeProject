@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'path.dart';
 import 'package:wayfinder/main_scaffold.dart';
+import 'package:wayfinder/itinerary_screen.dart';
 
 class BookmarksScreen extends StatefulWidget {
   final String accessToken;
@@ -89,19 +90,17 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     }
   }
 
-  void _openItineraryFullScreen(
-      String destination, String content, Map<String, dynamic> parameters, String created) {
+  void _openItineraryFullScreen(Map<String, dynamic> bookmark) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ItineraryDetailScreen(
-          destination: destination,
-          itineraryContent: content,
-          parameters: parameters,
-          created: created,
+        builder: (context) => ItineraryScreen(
+          accessToken: widget.accessToken,
+          user: widget.user,
+          itinerary: bookmark,
         ),
       ),
-    );
+    ).then((value) {setState(() {_fetchBookmarks();});});
   }
 
   @override
@@ -143,12 +142,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                                     : "N/A";
 
                                 return GestureDetector(
-                                  onTap: () => _openItineraryFullScreen(
-                                    location,
-                                    bookmark['itineraryContent'] ?? '',
-                                    parameters,
-                                    bookmark['created'],
-                                  ),
+                                  onTap: () => _openItineraryFullScreen(bookmark),
                                   child: Card(
                                     margin: const EdgeInsets.only(bottom: 12),
                                     elevation: 3,
@@ -204,69 +198,69 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
   }
 }
 
-class ItineraryDetailScreen extends StatelessWidget {
-  final String destination;
-  final String itineraryContent;
-  final Map<String, dynamic> parameters;
-  final String created;
+// class ItineraryDetailScreen extends StatelessWidget {
+//   final String destination;
+//   final String itineraryContent;
+//   final Map<String, dynamic> parameters;
+//   final String created;
 
-  const ItineraryDetailScreen({
-    super.key,
-    required this.destination,
-    required this.itineraryContent,
-    required this.parameters,
-    required this.created,
-  });
+//   const ItineraryDetailScreen({
+//     super.key,
+//     required this.destination,
+//     required this.itineraryContent,
+//     required this.parameters,
+//     required this.created,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    final createdDate = DateTime.tryParse(created)?.toLocal().toString().split(' ')[0] ?? created;
+//   @override
+//   Widget build(BuildContext context) {
+//     final createdDate = DateTime.tryParse(created)?.toLocal().toString().split(' ')[0] ?? created;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(destination),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _infoRow("🗓️ Created", createdDate),
-            _infoRow("🌆 Destination", destination),
-            _infoRow("🗓️ Start Date", parameters['startDate'] ?? 'N/A'),
-            _infoRow("⏳ Duration", "${parameters['duration'] ?? 'N/A'}"),
-            _infoRow("💰 Budget", parameters['budget'] ?? 'N/A'),
-            _infoRow("🤔 Interests", parameters['interests'] ?? 'N/A'),
-            _infoRow("🏖️ Travel Style", parameters['travelStyle'] ?? 'N/A'),
-            const SizedBox(height: 24),
-            _rawItinerary(itineraryContent),
-          ],
-        ),
-      ),
-    );
-  }
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(destination),
+//       ),
+//       body: SingleChildScrollView(
+//         padding: const EdgeInsets.all(16),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             _infoRow("🗓️ Created", createdDate),
+//             _infoRow("🌆 Destination", destination),
+//             _infoRow("🗓️ Start Date", parameters['startDate'] ?? 'N/A'),
+//             _infoRow("⏳ Duration", "${parameters['duration'] ?? 'N/A'}"),
+//             _infoRow("💰 Budget", parameters['budget'] ?? 'N/A'),
+//             _infoRow("🤔 Interests", parameters['interests'] ?? 'N/A'),
+//             _infoRow("🏖️ Travel Style", parameters['travelStyle'] ?? 'N/A'),
+//             const SizedBox(height: 24),
+//             _rawItinerary(itineraryContent),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
-  Widget _infoRow(String emoji, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Text(
-        "$emoji: $value",
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-      ),
-    );
-  }
+//   Widget _infoRow(String emoji, String value) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 4),
+//       child: Text(
+//         "$emoji: $value",
+//         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+//       ),
+//     );
+//   }
 
-  // This method now directly returns the raw content
-  Widget _rawItinerary(String content) {
-    return SingleChildScrollView(
-      child: Text(
-        content,  // Simply display the raw itinerary content
-        style: const TextStyle(
-          fontSize: 16,
-          height: 1.6,
-          fontFamily: 'Roboto',
-        ),
-      ),
-    );
-  }
-}
+//   // This method now directly returns the raw content
+//   Widget _rawItinerary(String content) {
+//     return SingleChildScrollView(
+//       child: Text(
+//         content,  // Simply display the raw itinerary content
+//         style: const TextStyle(
+//           fontSize: 16,
+//           height: 1.6,
+//           fontFamily: 'Roboto',
+//         ),
+//       ),
+//     );
+//   }
+// }
