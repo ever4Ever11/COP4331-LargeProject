@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
   description: API documentation for the Vacation App.
-  version: 1.0.0
-  title: Way Finder
+  version: 1.0.1
+  title: Vacation App API
   contact:
     email: yo881251@ucf.edu
   license:
@@ -33,19 +33,12 @@ paths:
       responses:
         200:
           description: Registration response
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-              error:
-                type: string
 
   /api/login:
     post:
       tags:
         - Auth
-      summary: Login with credentials
+      summary: Login user
       consumes:
         - application/json
       produces:
@@ -59,19 +52,6 @@ paths:
       responses:
         200:
           description: Login response
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              firstName:
-                type: string
-              lastName:
-                type: string
-              accessToken:
-                type: string
-              error:
-                type: string
 
   /api/verify-email:
     get:
@@ -87,9 +67,7 @@ paths:
           type: string
       responses:
         200:
-          description: HTML confirmation page
-        400:
-          description: Invalid or expired token
+          description: HTML confirmation
 
   /api/request-password-reset:
     post:
@@ -98,19 +76,15 @@ paths:
       summary: Request password reset
       consumes:
         - application/json
-      produces:
-        - application/json
       parameters:
         - in: body
-          name: request
+          name: email
           required: true
           schema:
             $ref: '#/definitions/EmailOnly'
       responses:
         200:
-          description: Email sent
-        400:
-          description: Email not found
+          description: Password reset email sent
 
   /api/reset-password:
     post:
@@ -118,8 +92,6 @@ paths:
         - Auth
       summary: Reset password with token
       consumes:
-        - application/json
-      produces:
         - application/json
       parameters:
         - in: body
@@ -129,9 +101,65 @@ paths:
             $ref: '#/definitions/ResetPassword'
       responses:
         200:
-          description: Password successfully reset
-        400:
-          description: Invalid or expired token
+          description: Password reset success
+
+  /api/itinerary:
+    post:
+      tags:
+        - Itinerary
+      summary: Generate and save itinerary
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: itineraryRequest
+          required: true
+          schema:
+            $ref: '#/definitions/ItineraryRequest'
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+      responses:
+        200:
+          description: Itinerary saved and returned
+
+    delete:
+      tags:
+        - Itinerary
+      summary: Delete an itinerary
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: created
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+      responses:
+        200:
+          description: Deletion confirmation
+
+  /api/itineraries:
+    get:
+      tags:
+        - Itinerary
+      summary: Get user's itineraries
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+      responses:
+        200:
+          description: List of itineraries
 
 definitions:
   Register:
@@ -154,7 +182,7 @@ definitions:
         example: yoanmolina15@gmail.com
       password:
         type: string
-        example: securePassword123
+        example: Test123@
 
   Login:
     type: object
@@ -164,11 +192,8 @@ definitions:
     properties:
       login:
         type: string
-        format: email
-        example: yoanmolina15@gmail.com
       password:
         type: string
-        example: test123
 
   EmailOnly:
     type: object
@@ -178,7 +203,6 @@ definitions:
       email:
         type: string
         format: email
-        example: yoanmolina15@gmail.com
 
   ResetPassword:
     type: object
@@ -188,7 +212,31 @@ definitions:
     properties:
       token:
         type: string
-        example: "9a8bcf..."
       newPassword:
         type: string
-        example: NewStrongPassword1!
+
+  ItineraryRequest:
+    type: object
+    required:
+      - location
+      - startDate
+      - duration
+      - budget
+      - interests
+      - travelStyle
+    properties:
+      location:
+        type: string
+      startDate:
+        type: string
+        format: date
+      duration:
+        type: integer
+      budget:
+        type: number
+      interests:
+        type: array
+        items:
+          type: string
+      travelStyle:
+        type: string
