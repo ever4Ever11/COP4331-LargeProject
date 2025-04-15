@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart'; 
 import 'path.dart';
 import 'package:wayfinder/main_scaffold.dart';
 import 'package:wayfinder/itinerary_screen.dart';
@@ -100,7 +101,11 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           itinerary: bookmark,
         ),
       ),
-    ).then((value) {setState(() {_fetchBookmarks();});});
+    ).then((value) {
+      setState(() {
+        _fetchBookmarks();
+      });
+    });
   }
 
   @override
@@ -136,7 +141,18 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                                 final bookmark = _bookmarks[index];
                                 final parameters = bookmark['parameters'];
                                 final location = parameters['location'] ?? 'Unknown Location';
-                                final startDate = parameters['startDate'] ?? 'N/A';
+
+                                final rawStartDate = parameters['startDate'];
+                                String formattedStartDate = 'N/A';
+                                if (rawStartDate != null) {
+                                  try {
+                                    final parsedDate = DateTime.parse(rawStartDate).toLocal();
+                                    formattedStartDate = DateFormat.yMMMMd().format(parsedDate); 
+                                  } catch (e) {
+                                    formattedStartDate = rawStartDate;
+                                  }
+                                }
+
                                 final duration = parameters['duration'] != null
                                     ? "${parameters['duration']} days"
                                     : "N/A";
@@ -169,7 +185,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                                             children: [
                                               const Icon(Icons.calendar_today, size: 16),
                                               const SizedBox(width: 6),
-                                              Text("Start: $startDate"),
+                                              Text("Start: $formattedStartDate"),
                                             ],
                                           ),
                                           const SizedBox(height: 2),
@@ -197,70 +213,3 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     );
   }
 }
-
-// class ItineraryDetailScreen extends StatelessWidget {
-//   final String destination;
-//   final String itineraryContent;
-//   final Map<String, dynamic> parameters;
-//   final String created;
-
-//   const ItineraryDetailScreen({
-//     super.key,
-//     required this.destination,
-//     required this.itineraryContent,
-//     required this.parameters,
-//     required this.created,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final createdDate = DateTime.tryParse(created)?.toLocal().toString().split(' ')[0] ?? created;
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(destination),
-//       ),
-//       body: SingleChildScrollView(
-//         padding: const EdgeInsets.all(16),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             _infoRow("🗓️ Created", createdDate),
-//             _infoRow("🌆 Destination", destination),
-//             _infoRow("🗓️ Start Date", parameters['startDate'] ?? 'N/A'),
-//             _infoRow("⏳ Duration", "${parameters['duration'] ?? 'N/A'}"),
-//             _infoRow("💰 Budget", parameters['budget'] ?? 'N/A'),
-//             _infoRow("🤔 Interests", parameters['interests'] ?? 'N/A'),
-//             _infoRow("🏖️ Travel Style", parameters['travelStyle'] ?? 'N/A'),
-//             const SizedBox(height: 24),
-//             _rawItinerary(itineraryContent),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _infoRow(String emoji, String value) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 4),
-//       child: Text(
-//         "$emoji: $value",
-//         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-//       ),
-//     );
-//   }
-
-//   // This method now directly returns the raw content
-//   Widget _rawItinerary(String content) {
-//     return SingleChildScrollView(
-//       child: Text(
-//         content,  // Simply display the raw itinerary content
-//         style: const TextStyle(
-//           fontSize: 16,
-//           height: 1.6,
-//           fontFamily: 'Roboto',
-//         ),
-//       ),
-//     );
-//   }
-// }
