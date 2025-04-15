@@ -38,8 +38,21 @@ const Signup: React.FunctionComponent = () => {
     }
   };
 
+  // password complexity check function
+  function isPasswordComplex(password: string): boolean {
+    // 8 characters, one uppercase, one lowercase, one number, one special character
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    return regex.test(password);
+  }
+
   async function doSignup(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
+
+    if (!isPasswordComplex(loginPassword)) {
+      alert("Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.");
+      return;
+    }
+
     const obj = { login: loginName, password: loginPassword, firstName: firstName, lastName: lastName };
     const js = JSON.stringify(obj);
     try {
@@ -83,7 +96,7 @@ const Signup: React.FunctionComponent = () => {
         <form onSubmit={doSignup}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="firstName">
-            <FaIcons.FaUser/> <p className="ml-3"> First Name </p>
+              <FaIcons.FaUser /> <p className="ml-3"> First Name </p>
             </label>
             <input
               type="text"
@@ -96,7 +109,7 @@ const Signup: React.FunctionComponent = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="lastName">
-            <FaIcons.FaUser/> <p className="ml-3"> Last Name </p>
+              <FaIcons.FaUser /> <p className="ml-3"> Last Name </p>
             </label>
             <input
               type="text"
@@ -109,7 +122,7 @@ const Signup: React.FunctionComponent = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="loginName">
-            <FaIcons.FaMailBulk/> <p className="ml-3"> Email </p>
+              <FaIcons.FaMailBulk /> <p className="ml-3"> Email </p>
             </label>
             <input
               type="text"
@@ -122,7 +135,7 @@ const Signup: React.FunctionComponent = () => {
           </div>
           <div className="mb-4 relative">
             <label className="block text-gray-700 text-sm font-bold mb-2 flex items-center" htmlFor="loginPassword">
-            <FaIcons.FaLock/> <p className="ml-3"> Password </p>
+              <FaIcons.FaLock /> <p className="ml-3"> Password </p>
             </label>
             <input
               type={inputType}
@@ -149,7 +162,7 @@ const Signup: React.FunctionComponent = () => {
           </button>
         </form>
         <p className="text-sl mb-5 text-center text-gray-800">
-          already have an account? <a className="hover:text-cyan-700 hover:underline hover:decoration-cyan-7000" href="/login">→Login</a>
+          already have an account? <a className="hover:text-cyan-700 hover:underline hover:decoration-cyan-700" href="/login">→Login</a>
         </p>
       </div>
     </div>

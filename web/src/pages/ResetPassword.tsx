@@ -10,8 +10,16 @@ const ResetPassword: React.FC = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
+    function isPasswordComplex(password: string): boolean {
+        // 8 characters, one uppercase, one lowercase, one digit, one special character
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+        return regex.test(password);
+    }
+
     const handleReset = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
+        setMessage('');
 
         if (!token) {
             setError('Invalid or missing token.');
@@ -23,11 +31,19 @@ const ResetPassword: React.FC = () => {
             return;
         }
 
+        // Check password complexity
+        if (!isPasswordComplex(newPassword)) {
+            setError(
+                'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.'
+            );
+            return;
+        }
+
         try {
             const response = await fetch(buildPath('api/reset-password'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token, newPassword })
+                body: JSON.stringify({ token, newPassword }),
             });
 
             const data = await response.json();
